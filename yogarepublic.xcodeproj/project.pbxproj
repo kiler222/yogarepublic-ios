@@ -3,19 +3,26 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C38481B35E40F90513B77C3D /* Pods_yogarepublic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C91DC5166EABB17E063B211 /* Pods_yogarepublic.framework */; };
 		E55EBC8C23F0CD0400699BCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55EBC8B23F0CD0400699BCE /* AppDelegate.swift */; };
 		E55EBC8E23F0CD0400699BCE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55EBC8D23F0CD0400699BCE /* SceneDelegate.swift */; };
 		E55EBC9023F0CD0400699BCE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55EBC8F23F0CD0400699BCE /* ViewController.swift */; };
 		E55EBC9323F0CD0400699BCE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E55EBC9123F0CD0400699BCE /* Main.storyboard */; };
 		E55EBC9523F0CD0C00699BCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E55EBC9423F0CD0C00699BCE /* Assets.xcassets */; };
 		E55EBC9823F0CD0C00699BCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E55EBC9623F0CD0C00699BCE /* LaunchScreen.storyboard */; };
+		E55EBCA223F15E4600699BCE /* AlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55EBCA123F15E4600699BCE /* AlamofireManager.swift */; };
+		E55EBCA423F1780D00699BCE /* TimetableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55EBCA323F1780D00699BCE /* TimetableViewController.swift */; };
+		E55EBCA623F1A2F700699BCE /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55EBCA523F1A2F600699BCE /* TabBarController.swift */; };
+		E55EBCA823F1A48300699BCE /* TimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55EBCA723F1A48300699BCE /* TimeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1C91DC5166EABB17E063B211 /* Pods_yogarepublic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_yogarepublic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C94FFE7F60505D29438DC53 /* Pods-yogarepublic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yogarepublic.debug.xcconfig"; path = "Target Support Files/Pods-yogarepublic/Pods-yogarepublic.debug.xcconfig"; sourceTree = "<group>"; };
 		E55EBC8823F0CD0400699BCE /* yogarepublic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yogarepublic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55EBC8B23F0CD0400699BCE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E55EBC8D23F0CD0400699BCE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +31,11 @@
 		E55EBC9423F0CD0C00699BCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E55EBC9723F0CD0C00699BCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E55EBC9923F0CD0C00699BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E55EBCA123F15E4600699BCE /* AlamofireManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireManager.swift; sourceTree = "<group>"; };
+		E55EBCA323F1780D00699BCE /* TimetableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableViewController.swift; sourceTree = "<group>"; };
+		E55EBCA523F1A2F600699BCE /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		E55EBCA723F1A48300699BCE /* TimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeViewController.swift; sourceTree = "<group>"; };
+		EEB790390B18A06316504183 /* Pods-yogarepublic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yogarepublic.release.xcconfig"; path = "Target Support Files/Pods-yogarepublic/Pods-yogarepublic.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +43,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C38481B35E40F90513B77C3D /* Pods_yogarepublic.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2265412B5B3AC7EACA0EB137 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2C94FFE7F60505D29438DC53 /* Pods-yogarepublic.debug.xcconfig */,
+				EEB790390B18A06316504183 /* Pods-yogarepublic.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		8A29BD98500C670C3551DBA9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1C91DC5166EABB17E063B211 /* Pods_yogarepublic.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E55EBC7F23F0CD0400699BCE = {
 			isa = PBXGroup;
 			children = (
 				E55EBC8A23F0CD0400699BCE /* yogarepublic */,
 				E55EBC8923F0CD0400699BCE /* Products */,
+				2265412B5B3AC7EACA0EB137 /* Pods */,
+				8A29BD98500C670C3551DBA9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,12 +89,16 @@
 			isa = PBXGroup;
 			children = (
 				E55EBC8B23F0CD0400699BCE /* AppDelegate.swift */,
+				E55EBCA523F1A2F600699BCE /* TabBarController.swift */,
+				E55EBCA123F15E4600699BCE /* AlamofireManager.swift */,
 				E55EBC8D23F0CD0400699BCE /* SceneDelegate.swift */,
+				E55EBCA323F1780D00699BCE /* TimetableViewController.swift */,
 				E55EBC8F23F0CD0400699BCE /* ViewController.swift */,
 				E55EBC9123F0CD0400699BCE /* Main.storyboard */,
 				E55EBC9423F0CD0C00699BCE /* Assets.xcassets */,
 				E55EBC9623F0CD0C00699BCE /* LaunchScreen.storyboard */,
 				E55EBC9923F0CD0C00699BCE /* Info.plist */,
+				E55EBCA723F1A48300699BCE /* TimeViewController.swift */,
 			);
 			path = yogarepublic;
 			sourceTree = "<group>";
@@ -74,9 +110,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E55EBC9C23F0CD0C00699BCE /* Build configuration list for PBXNativeTarget "yogarepublic" */;
 			buildPhases = (
+				F1F7F99D8408C6EF05C75FA6 /* [CP] Check Pods Manifest.lock */,
 				E55EBC8423F0CD0400699BCE /* Sources */,
 				E55EBC8523F0CD0400699BCE /* Frameworks */,
 				E55EBC8623F0CD0400699BCE /* Resources */,
+				5579211E2A3755FCD582F019 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -133,12 +171,58 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		5579211E2A3755FCD582F019 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-yogarepublic/Pods-yogarepublic-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-yogarepublic/Pods-yogarepublic-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-yogarepublic/Pods-yogarepublic-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F1F7F99D8408C6EF05C75FA6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-yogarepublic-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E55EBC8423F0CD0400699BCE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E55EBCA223F15E4600699BCE /* AlamofireManager.swift in Sources */,
 				E55EBC9023F0CD0400699BCE /* ViewController.swift in Sources */,
+				E55EBCA423F1780D00699BCE /* TimetableViewController.swift in Sources */,
+				E55EBCA623F1A2F700699BCE /* TabBarController.swift in Sources */,
+				E55EBCA823F1A48300699BCE /* TimeViewController.swift in Sources */,
 				E55EBC8C23F0CD0400699BCE /* AppDelegate.swift in Sources */,
 				E55EBC8E23F0CD0400699BCE /* SceneDelegate.swift in Sources */,
 			);
@@ -282,6 +366,7 @@
 		};
 		E55EBC9D23F0CD0C00699BCE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C94FFE7F60505D29438DC53 /* Pods-yogarepublic.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -300,6 +385,7 @@
 		};
 		E55EBC9E23F0CD0C00699BCE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EEB790390B18A06316504183 /* Pods-yogarepublic.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
