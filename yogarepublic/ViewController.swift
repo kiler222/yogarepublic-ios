@@ -8,35 +8,52 @@
 
 import UIKit
 import CalendarKit
-import RSBarcodes_Swift
+import FirebaseAuth
 import AVFoundation
+import ZXingObjC
 
 
 var eventList1 : [Event] = []
 var eventList2 : [Event] = []
-
-class ViewController: UIViewController {
+var tempLogin = "pjobkiewicz@gmail.com"
+class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBAction func button(_ sender: Any) {
         
 //          if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ItemDetailsViewController") as? ItemDetailsViewController
-                  
-        
-        let vc = TimetableViewController()
-        
-        present(vc, animated: true, completion: nil)
+//        let vc = TimetableViewController()
+//        present(vc, animated: true, completion: nil)
                     
+        
+//        print("PJ email: \(emailField.text), pass: \(passwordField.text)")
         
         
     }
     
     
+
     
+    @IBAction func emailFieldDidEndOnExit(_ sender: Any) {
+         print("PJ email did end on exti")
+        passwordField.becomeFirstResponder()
+    }
+    
+    
+    @IBAction func passwordDidEndOnExit(_ sender: Any) {
+        print("PJ password did end on exti")
+        
+    }
+    
+    
+    @IBOutlet weak var emailField: UITextField!
+    @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var cardNumber: UILabel!
     @IBOutlet weak var barcodeImage: UIImageView!
     @IBOutlet weak var button: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
         
         AlamofireManager.sharedInstance.fetchAllRooms(){ (list1, list2) in
             
@@ -46,30 +63,44 @@ class ViewController: UIViewController {
             
         }
             
+        
+        
        
    
         
     }
     
+//    override func viewWillAppear(_ animated: Bool) {
+//        
+//    }
+//    
     override func viewDidAppear(_ animated: Bool) {
-        let gen = RSUnifiedCodeGenerator.shared
-                 gen.fillColor = UIColor.white
-                 gen.strokeColor = UIColor.black
-                    let code = "1234"
-                 
-                 if let image = gen.generateCode(code, machineReadableCodeObjectType: AVMetadataObject.ObjectType.itf14.rawValue) {
-                     self.barcodeImage.layer.borderWidth = 1
-                     
-                     barcodeImage.image = image //RSAbstractCodeGenerator.resizeImage(image, targetSize: self.barcodeImage.bounds.size, contentMode: UIView.ContentMode.bottomRight)
-                 } else {
-                    print("PJ blad generowanie itf14")
-                }
+        var code = ""
+        emailField.delegate = self
+        passwordField.delegate = self
               
+        Auth.auth().signInAnonymously() { (authResult, error) in
+          // ...
+            FirebaseManager.sharedInstance.getCardNumber(login: tempLogin) { (cardNumber) in
+                code = cardNumber
+                self.cardNumber.text = code
+                let writer = ZXMultiFormatWriter()
+                do {
+                    let result = try writer.encode(code, format: kBarcodeFormatITF, width: 240, height: 100)
+                    let zx = ZXImage(matrix: result)
+                    let cg = zx?.cgimage
+                    let img = UIImage(cgImage: cg!)
+                    self.barcodeImage.image = img
+                } catch {
+                    print("PJ \(error)")
+                }
+            }
+        }
     }
 
+
     
-
-
+  
 }
 
 public func getDate(date: String) -> Date? {

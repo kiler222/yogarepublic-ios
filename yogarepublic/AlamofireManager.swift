@@ -63,32 +63,26 @@ func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
 //         print("PJ roomName jest: \(item["roomName"]), \(item["startDate"])")
                      roomName = "sala nieznana"
         }
-        
- 
-        
         event.text = "\(item["name"] as! String) - \(item["instructorName"] as! String)\n\(roomName)"
         let startDate = getDate(date: item["startDate"] as! String)
         let endDate = getDate(date: item["endDate"] as! String)
         event.startDate = startDate!
         event.endDate = endDate!
         let color = (item["backgroundColor"] as! String).replacingOccurrences(of: "#", with: "#ff")
-//        print("PJ kolor: \(color)")
         event.backgroundColor = UIColor(hex: color)!
-        
         if (roomName == "Mała Sala") {
             eventList1.append(event)
         } else {
             eventList2.append(event)
         }
-        
-        
     }
-    
-//    let rooms = rows.flatMap { roomDict in return RemoteRoom(jsonData: roomDict) }
     completion(eventList1, eventList2)
   }
 }
 
+    
+    
+    
     
 
     
