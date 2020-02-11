@@ -16,16 +16,102 @@ import ZXingObjC
 var eventList1 : [Event] = []
 var eventList2 : [Event] = []
 var tempLogin = "pjobkiewicz@gmail.com"
+var tempPassword = "xiubofwo"
 class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBAction func button(_ sender: Any) {
         
-//          if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ItemDetailsViewController") as? ItemDetailsViewController
-//        let vc = TimetableViewController()
-//        present(vc, animated: true, completion: nil)
-                    
+        hideLogin()
+        showHUD()
         
-//        print("PJ email: \(emailField.text), pass: \(passwordField.text)")
+        if (emailField.text?.isEmpty ?? true || passwordField.text?.isEmpty ?? true) {
+            let alertController = UIAlertController(title: "Ups!", message:
+                   "Email and password cannot be empty.", preferredStyle: .alert)
+               alertController.addAction(UIAlertAction(title: "OK", style: .default))
+
+               self.present(alertController, animated: true, completion: nil)
+            showLogin()
+            hideHUD()
+            
+        } else {
+        
+            print("PJ email: \(emailField.text), pass: \(passwordField.text)")
+            
+            AlamofireManager.sharedInstance.efitnessLogin(email: tempLogin, password: tempPassword) { (accessToken) in
+                
+                if (accessToken.starts(with: "-1")) {
+                    let alertController = UIAlertController(title: "Incorrect email or password.", message:
+                        "Try again", preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alertController, animated: true, completion: nil)
+                    self.showLogin()
+                    self.hideHUD()
+                } else {
+                    
+                    print("PJ token odczytany: \(accessToken)")
+                    
+                    AlamofireManager.sharedInstance.getMemberInfo(token: accessToken) { (userName) in
+                        
+                        if (userName.starts(with: "-1")) {
+                            let alertController = UIAlertController(title: "Error downloading data", message:
+                            "Try again", preferredStyle: .alert)
+                            alertController.addAction(UIAlertAction(title: "Try again later", style: .default))
+                            self.present(alertController, animated: true, completion: nil)
+                            self.showLogin()
+                            self.hideHUD()
+                        } else {
+                            
+                            print("PJ tutajjjjj")
+                            Auth.auth().signInAnonymously() { (authResult, error) in
+                              // ...
+                                print("PJ error: \(error)")
+                                if (error == nil){
+                                print("PJ error == nil")
+                                    FirebaseManager.sharedInstance.getCardNumber(login: tempLogin) { (cardNumber) in
+                                        
+                                        self.cardNumber.text = cardNumber
+                                        self.cardNumber.isHidden = false
+                                        let writer = ZXMultiFormatWriter()
+                                        do {
+                                            let result = try writer.encode(cardNumber, format: kBarcodeFormatITF, width: 240, height: 100)
+                                            let zx = ZXImage(matrix: result)
+                                            let cg = zx?.cgimage
+                                            let img = UIImage(cgImage: cg!)
+                                            self.barcodeImage.image = img
+                                            self.barcodeImage.isHidden = false
+                                        } catch {
+                                            print("PJ \(error)")
+                                        }
+                                        self.logoutButton.isHidden = false
+                                        self.userNameField.text = userName
+                                        self.hideHUD()
+                                    }
+                                } else {
+                                     print("PJ error != nil")
+                                    self.showLogin()
+                                    self.hideHUD()
+                                    
+                                }
+                            }
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                        }
+                        
+                        
+                        
+                    }
+                    
+                    
+                }
+                
+                
+            }
+        }
         
         
     }
@@ -42,14 +128,53 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBAction func passwordDidEndOnExit(_ sender: Any) {
         print("PJ password did end on exti")
         
+        button(sender)
+        
     }
     
     
+    @IBAction func logoutButton(_ sender: Any) {
+    
+        let alertController = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .actionSheet)
+                
+        let action1 = UIAlertAction(title: "No", style: .default) { (action:UIAlertAction) in
+            print("You've pressed default")
+        }
+
+
+        let action3 = UIAlertAction(title: "Yes", style: .destructive) { (action:UIAlertAction) in
+            self.passwordField.text = ""
+           self.emailField.text = ""
+           self.userNameField.text = ""
+           self.cardNumber.isHidden = true
+           self.barcodeImage.isHidden = true
+           self.showLogin()
+           self.logoutButton.isHidden = true
+        print("You've pressed the destructive")
+        }
+
+        alertController.addAction(action1)
+        
+        alertController.addAction(action3)
+        self.present(alertController, animated: true, completion: nil)
+        
+        
+       
+        
+    }
+    
+    
+    @IBOutlet weak var logoutButton: UIButton!
+    @IBOutlet weak var progressIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var userNameField: UILabel!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var cardNumber: UILabel!
     @IBOutlet weak var barcodeImage: UIImageView!
     @IBOutlet weak var button: UIButton!
+    
+    var wasLogged = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -57,15 +182,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         AlamofireManager.sharedInstance.fetchAllRooms(){ (list1, list2) in
             
+        
+            //TODO - dorobic konwersje eventlist do json i zapisywania potem w userdefaults.
+            
             
             eventList1 = list1
             eventList2 = list2
             
         }
-            
-        
-        
-       
    
         
     }
@@ -75,33 +199,40 @@ class ViewController: UIViewController, UITextFieldDelegate {
 //    }
 //    
     override func viewDidAppear(_ animated: Bool) {
-        var code = ""
+      
+        hideHUD()
         emailField.delegate = self
         passwordField.delegate = self
               
-        Auth.auth().signInAnonymously() { (authResult, error) in
-          // ...
-            FirebaseManager.sharedInstance.getCardNumber(login: tempLogin) { (cardNumber) in
-                code = cardNumber
-                self.cardNumber.text = code
-                let writer = ZXMultiFormatWriter()
-                do {
-                    let result = try writer.encode(code, format: kBarcodeFormatITF, width: 240, height: 100)
-                    let zx = ZXImage(matrix: result)
-                    let cg = zx?.cgimage
-                    let img = UIImage(cgImage: cg!)
-                    self.barcodeImage.image = img
-                } catch {
-                    print("PJ \(error)")
-                }
-            }
-        }
+
     }
 
+    func showHUD(){
+        progressIndicator.startAnimating()
+        progressIndicator.isHidden = false
+    }
+    
+    func hideHUD(){
+        progressIndicator.stopAnimating()
+        progressIndicator.isHidden = true
+    }
 
+    func showLogin(){
+        emailField.isHidden = false
+        passwordField.isHidden = false
+        button.isHidden = false
+    }
+
+    func hideLogin(){
+        emailField.isHidden = true
+        passwordField.isHidden = true
+        button.isHidden = true
+    }
     
   
 }
+
+
 
 public func getDate(date: String) -> Date? {
     let dateFormatter = DateFormatter()

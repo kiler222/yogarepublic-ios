@@ -7,20 +7,42 @@
 //
 
 import UIKit
+import CalendarKit
 
 class TimeViewController: UIViewController {
 
     @IBAction func room2(_ sender: Any) {
-        let vc = TimetableViewController()
-        vc.eventList = eventList2
-        present(vc, animated: true, completion: nil)
+       
+        
+        if (eventList2.isEmpty) {
+            let alertController = UIAlertController(title: "Updating data", message:
+                   "Please try later...", preferredStyle: .alert)
+               alertController.addAction(UIAlertAction(title: "OK", style: .default))
+
+               self.present(alertController, animated: true, completion: nil)
+        } else {
+            let vc = TimetableViewController()
+            vc.eventList = eventList2
+            present(vc, animated: true, completion: nil)
+        }
+        
+    
     }
     
     
     @IBAction func room1(_ sender: Any) {
-        let vc = TimetableViewController()
-        vc.eventList = eventList1
-        present(vc, animated: true, completion: nil)
+        
+        if (eventList1.isEmpty) {
+           let alertController = UIAlertController(title: "Updating data", message:
+                  "Please try later...", preferredStyle: .alert)
+              alertController.addAction(UIAlertAction(title: "OK", style: .default))
+
+              self.present(alertController, animated: true, completion: nil)
+        } else {
+            let vc = TimetableViewController()
+            vc.eventList = eventList1
+            present(vc, animated: true, completion: nil)
+        }
     }
     
     

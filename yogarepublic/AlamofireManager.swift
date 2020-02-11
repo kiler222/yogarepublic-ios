@@ -80,6 +80,130 @@ func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
   }
 }
 
+    /*
+     
+         Fuel.get("https://api-frontend2.efitness.com.pl/api/clubs/324/members")
+             .header("Accept" to "application/json")
+             .header("api-access-token" to token)
+             .header("member-token" to "bearer $memberToken")
+             .also { println(it) }
+             .responseString { _, response, result ->
+
+
+                 val (data, error) = result
+
+     //            Log.e(TAG, "pobrany member - ${error}")
+     //            Log.e(TAG, "response - ${JSONArray(data)}")
+
+                 var obj = JSONObject(data)
+
+                 val firstName = obj.getString("firstName")
+                 val lastName = obj.getString("lastName")
+
+     //            Log.e(TAG, obj.toString())
+     //            Log.e(TAG, firstName + " " + lastName)
+
+                 callback(firstName + " " + lastName)
+
+             }
+     
+     
+     */
+    
+    
+    
+    
+    func getMemberInfo(token: String, completion: @escaping (String) -> Void) {
+        let headers: HTTPHeaders = [
+              "api-access-token": "bih/AiXX0k2mqZGz44y+Ag==",
+              "Accept": "application/json",
+              "member-token" : "bearer \(token)"
+          ]
+          
+
+          
+        guard let url = URL(string: "https://api-frontend2.efitness.com.pl/api/clubs/324/members") else {
+          completion("-1: zly adres api")
+          return
+        }
+        
+        
+        Alamofire.request(url,
+                          method: .get, headers: headers)
+          .validate()
+          .responseJSON { response in
+            guard response.result.isSuccess else {
+              print("Error while fetching remote rooms: \(response.result.error)")
+              completion("-1: blad z serwera")
+              return
+            }
+
+            
+//            print("PJ personal: \(response.result.value)")
+            
+            guard let value = response.result.value as? [String: Any],
+            
+                let firstName = value["firstName"] as? String,
+                let lastName = value["lastName"] as? String
+                
+            
+            else {
+                print("Malformed data received from fetchAllRooms service")
+                completion("-1: blad odczytu danych")
+                return
+            }
+            
+         
+            completion("\(firstName) \(lastName)")
+            
+           }
+
+    }
+    
+    
+    func efitnessLogin(email: String, password: String, completion: @escaping (String) -> Void) {
+        let headers: HTTPHeaders = [
+              "api-access-token": "bih/AiXX0k2mqZGz44y+Ag==",
+              "Accept": "application/json",
+              "Content-type": "application/json"
+          ]
+          
+
+          
+        guard let url = URL(string: "https://api-frontend2.efitness.com.pl/api/clubs/324/token/member") else {
+          completion("-1: zly adres api")
+          return
+        }
+        
+        let params : Parameters = ["login" : tempLogin,"password" : tempPassword]
+
+        
+        Alamofire.request(url,
+                          method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers)
+          .validate()
+          .responseJSON { response in
+            guard response.result.isSuccess else {
+              print("Error while fetching remote rooms: \(response.result.error)")
+              completion("-1: blad z serwera")
+              return
+            }
+
+            
+            guard let value = response.result.value as? [String: Any],
+            
+                let accessToken = value["accessToken"] as? String else {
+                print("Malformed data received from fetchAllRooms service")
+                completion("-1: blad odczytu danych")
+                return
+            }
+            
+         
+            completion(accessToken)
+            
+           }
+
+    }
+    
     
     
     
