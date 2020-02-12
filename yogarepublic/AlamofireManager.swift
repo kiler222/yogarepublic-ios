@@ -15,7 +15,7 @@ class AlamofireManager: NSObject {
 
 
      static let sharedInstance  = AlamofireManager()
-
+    
 // With Alamofire
 func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
     var eventList1 : [Event] = []
@@ -25,8 +25,12 @@ func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
         "Accept": "application/json"
     ]
     
+    let end = Calendar.current.date(byAdding: .day, value: 31, to: Date())!.string(format: "yyyy-MM-dd")
+    let start = Calendar.current.date(byAdding: .day, value: -7, to: Date())!.string(format: "yyyy-MM-dd")
     
-  guard let url = URL(string: "https://api-frontend2.efitness.com.pl/api/clubs/324/schedules/classes?dateFrom=2020-02-01&dateTo=2020-02-28") else {
+//    print("PJ \(start) i end: \(end)")
+    
+  guard let url = URL(string: "https://api-frontend2.efitness.com.pl/api/clubs/324/schedules/classes?dateFrom=\(start)&dateTo=\(end)") else {
     completion(eventList1, eventList2)
     return
   }
@@ -63,9 +67,45 @@ func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
 //         print("PJ roomName jest: \(item["roomName"]), \(item["startDate"])")
                      roomName = "sala nieznana"
         }
-        event.text = "\(item["name"] as! String) - \(item["instructorName"] as! String)\n\(roomName)"
+        
+        
+         
+
         let startDate = getDate(date: item["startDate"] as! String)
         let endDate = getDate(date: item["endDate"] as! String)
+               
+               
+
+        let startHour = Calendar.current.component(.hour, from: startDate!)
+        let startMinute = Calendar.current.component(.minute, from: startDate!)
+
+        let endHour = Calendar.current.component(.hour, from: endDate!)
+        let endMinute = Calendar.current.component(.minute, from: endDate!)
+
+        var endMinuteString = ""
+        
+        if (endMinute > 0 && endMinute < 10) {
+            endMinuteString = "0\(endMinute)"
+        } else if (endMinute == 0){
+            endMinuteString = "00"
+        } else {
+            endMinuteString = "\(endMinute)"
+        }
+        
+        var startMinuteString = ""
+        
+        if (startMinute > 0 && startMinute < 10) {
+            startMinuteString = "0\(startMinute)"
+        } else if (startMinute == 0){
+            startMinuteString = "00"
+        } else {
+            startMinuteString = "\(startMinute)"
+        }
+        
+        let times = "\(startHour):\(startMinuteString) - \(endHour):\(endMinuteString)"
+        
+        event.text = "\(item["name"] as! String) - \(item["instructorName"] as! String)\n\(roomName)\n\(times)"
+        
         event.startDate = startDate!
         event.endDate = endDate!
         let color = (item["backgroundColor"] as! String).replacingOccurrences(of: "#", with: "#ff")
@@ -74,6 +114,7 @@ func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
             eventList1.append(event)
         } else {
             eventList2.append(event)
+//            print(event.text)
         }
     }
     completion(eventList1, eventList2)
@@ -175,7 +216,7 @@ func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
           return
         }
         
-        let params : Parameters = ["login" : tempLogin,"password" : tempPassword]
+        let params : Parameters = ["login" : email, "password" : password]
 
         
         Alamofire.request(url,
@@ -211,4 +252,13 @@ func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
 
     
     
+}
+
+
+extension Date {
+    func string(format: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        return formatter.string(from: self)
+    }
 }

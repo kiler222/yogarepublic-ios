@@ -15,10 +15,11 @@ import ZXingObjC
 
 var eventList1 : [Event] = []
 var eventList2 : [Event] = []
-var tempLogin = "pjobkiewicz@gmail.com"
-var tempPassword = "xiubofwo"
 class ViewController: UIViewController, UITextFieldDelegate {
 
+    var login = ""
+    var password = ""
+    
     @IBAction func button(_ sender: Any) {
         
         hideLogin()
@@ -37,7 +38,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
             print("PJ email: \(emailField.text), pass: \(passwordField.text)")
             
-            AlamofireManager.sharedInstance.efitnessLogin(email: tempLogin, password: tempPassword) { (accessToken) in
+            login = emailField.text ?? ""
+            password = passwordField.text ?? ""
+            
+            AlamofireManager.sharedInstance.efitnessLogin(email: login, password: password) { (accessToken) in
                 
                 if (accessToken.starts(with: "-1")) {
                     let alertController = UIAlertController(title: "Incorrect email or password.", message:
@@ -66,26 +70,44 @@ class ViewController: UIViewController, UITextFieldDelegate {
                               // ...
                                 print("PJ error: \(error)")
                                 if (error == nil){
-                                print("PJ error == nil")
-                                    FirebaseManager.sharedInstance.getCardNumber(login: tempLogin) { (cardNumber) in
+                                    
+                                    FirebaseManager.sharedInstance.checkIfExist(login: self.login) { (exist) in
                                         
-                                        self.cardNumber.text = cardNumber
-                                        self.cardNumber.isHidden = false
-                                        let writer = ZXMultiFormatWriter()
-                                        do {
-                                            let result = try writer.encode(cardNumber, format: kBarcodeFormatITF, width: 240, height: 100)
-                                            let zx = ZXImage(matrix: result)
-                                            let cg = zx?.cgimage
-                                            let img = UIImage(cgImage: cg!)
-                                            self.barcodeImage.image = img
-                                            self.barcodeImage.isHidden = false
-                                        } catch {
-                                            print("PJ \(error)")
+                                        if (exist) {
+                                            
+                                            FirebaseManager.sharedInstance.updateLastLogin(login: self.login)
+                                            
+                                            FirebaseManager.sharedInstance.getCardNumber(login: self.login) { (cardNumber) in
+                                                
+                                                self.cardNumber.text = cardNumber
+                                                self.cardNumber.isHidden = false
+                                                let writer = ZXMultiFormatWriter()
+                                                do {
+                                                    let result = try writer.encode(cardNumber, format: kBarcodeFormatITF, width: 240, height: 100)
+                                                    let zx = ZXImage(matrix: result)
+                                                    let cg = zx?.cgimage
+                                                    let img = UIImage(cgImage: cg!)
+                                                    self.barcodeImage.image = img
+                                                    self.barcodeImage.isHidden = false
+                                                } catch {
+                                                    print("PJ \(error)")
+                                                }
+                                                self.logoutButton.isHidden = false
+                                                self.userNameField.text = userName
+                                                self.hideHUD()
+                                                
+                                            }
+                                            
+                                        } else {
+                                            
+                                            self.logoutButton.isHidden = false
+                                            self.userNameField.text = userName
+                                            self.hideHUD()
+                                            
                                         }
-                                        self.logoutButton.isHidden = false
-                                        self.userNameField.text = userName
-                                        self.hideHUD()
+                                        
                                     }
+                                
                                 } else {
                                      print("PJ error != nil")
                                     self.showLogin()
@@ -177,29 +199,25 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
+        print("PJ VC viewdidload")
         
         AlamofireManager.sharedInstance.fetchAllRooms(){ (list1, list2) in
-            
-        
             //TODO - dorobic konwersje eventlist do json i zapisywania potem w userdefaults.
-            
-            
             eventList1 = list1
             eventList2 = list2
-            
         }
+        
+        
    
         
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        
-//    }
-//    
     override func viewDidAppear(_ animated: Bool) {
       
+        print("PJ VC viewdidappera")
+        
+
+        
         hideHUD()
         emailField.delegate = self
         passwordField.delegate = self

@@ -20,6 +20,7 @@
 		E55EBCA823F1A48300699BCE /* TimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55EBCA723F1A48300699BCE /* TimeViewController.swift */; };
 		E55EBCAA23F2C51600699BCE /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55EBCA923F2C51600699BCE /* FirebaseManager.swift */; };
 		E55EBCAC23F2C9D700699BCE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E55EBCAB23F2C9D700699BCE /* GoogleService-Info.plist */; };
+		E55EBCAE23F3F8F800699BCE /* Variable_bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = E55EBCAD23F3F86700699BCE /* Variable_bold.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		E55EBCA723F1A48300699BCE /* TimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeViewController.swift; sourceTree = "<group>"; };
 		E55EBCA923F2C51600699BCE /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		E55EBCAB23F2C9D700699BCE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E55EBCAD23F3F86700699BCE /* Variable_bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Variable_bold.otf; sourceTree = "<group>"; };
 		EEB790390B18A06316504183 /* Pods-yogarepublic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yogarepublic.release.xcconfig"; path = "Target Support Files/Pods-yogarepublic/Pods-yogarepublic.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -92,6 +94,7 @@
 		E55EBC8A23F0CD0400699BCE /* yogarepublic */ = {
 			isa = PBXGroup;
 			children = (
+				E55EBCAD23F3F86700699BCE /* Variable_bold.otf */,
 				E55EBCAB23F2C9D700699BCE /* GoogleService-Info.plist */,
 				E55EBC8B23F0CD0400699BCE /* AppDelegate.swift */,
 				E55EBCA923F2C51600699BCE /* FirebaseManager.swift */,
@@ -171,6 +174,7 @@
 			files = (
 				E55EBC9823F0CD0C00699BCE /* LaunchScreen.storyboard in Resources */,
 				E55EBCAC23F2C9D700699BCE /* GoogleService-Info.plist in Resources */,
+				E55EBCAE23F3F8F800699BCE /* Variable_bold.otf in Resources */,
 				E55EBC9523F0CD0C00699BCE /* Assets.xcassets in Resources */,
 				E55EBC9323F0CD0400699BCE /* Main.storyboard in Resources */,
 			);

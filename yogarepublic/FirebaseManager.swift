@@ -61,7 +61,30 @@ class FirebaseManager: NSObject {
         
     }
 
+    func checkIfExist(login: String, completion: @escaping (Bool) -> Void){
+        db = Firestore.firestore()
+        db.collection("users").document(login).getDocument { (document, error) in
+            
+            if (document!.exists) {
+                completion(true)
+            } else {
+                completion(false)
+            }
+        }
+    }
     
-    
+    func updateLastLogin(login: String){
+        db = Firestore.firestore()
+        db.collection("users").document(login).updateData([
+            "lastLogin": Timestamp()
+        ]) { err in
+            if let err = err {
+                print("PJ Error updating lastlogin document: \(err)")
+            } else {
+                print("PJ Lastlogin successfully updated")
+            }
+        }
+
+    }
     
 }
