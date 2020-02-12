@@ -60,7 +60,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="a7T-7d-Qqw" userLabel="Password ">
+                            <textField opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="a7T-7d-Qqw">
                                 <rect key="frame" x="97.5" y="266" width="180" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="180" id="ZqC-wX-MU2"/>
@@ -164,7 +164,7 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yrbackground" translatesAutoresizingMaskIntoConstraints="NO" id="lcX-dj-8rH" userLabel="Background">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Dl-W3-Kmv">
+                            <button hidden="YES" opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Dl-W3-Kmv">
                                 <rect key="frame" x="38" y="64" width="300" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="6Iw-NW-RyG"/>
@@ -178,7 +178,7 @@
                                     <action selector="room1:" destination="1f4-tn-h6L" eventType="touchUpInside" id="I4W-Kh-ZVe"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Npk-Jl-wa4">
+                            <button hidden="YES" opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Npk-Jl-wa4">
                                 <rect key="frame" x="37.5" y="328" width="300" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="Irl-wf-60M"/>

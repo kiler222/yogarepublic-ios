@@ -79,6 +79,8 @@ class TimeViewController: UIViewController {
         room2.layer.shadowOpacity = 0.7
         room2.layer.masksToBounds = false
         
+        room1.isHidden = false
+        room2.isHidden = false
         
     }
     

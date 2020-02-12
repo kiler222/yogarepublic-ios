@@ -20,6 +20,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var login = ""
     var password = ""
     
+    //TODO - chowac klawiature gdy user kliknie przycisk zalogu j zmiast entera naklawiaturze
     @IBAction func button(_ sender: Any) {
         
         hideLogin()
@@ -36,7 +37,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             
         } else {
         
-            print("PJ email: \(emailField.text), pass: \(passwordField.text)")
+//            print("PJ email: \(emailField.text), pass: \(passwordField.text)")
             
             login = emailField.text ?? ""
             password = passwordField.text ?? ""
@@ -52,7 +53,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     self.hideHUD()
                 } else {
                     
-                    print("PJ token odczytany: \(accessToken)")
+//                    print("PJ token odczytany: \(accessToken)")
                     
                     AlamofireManager.sharedInstance.getMemberInfo(token: accessToken) { (userName) in
                         
@@ -65,12 +66,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
                             self.hideHUD()
                         } else {
                             
-                            print("PJ tutajjjjj")
+//                            print("PJ tutajjjjj")
                             Auth.auth().signInAnonymously() { (authResult, error) in
                               // ...
                                 print("PJ error: \(error)")
                                 if (error == nil){
                                     
+                                    self.localLogin = self.login
                                     FirebaseManager.sharedInstance.checkIfExist(login: self.login) { (exist) in
                                         
                                         if (exist) {
@@ -79,6 +81,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                                             
                                             FirebaseManager.sharedInstance.getCardNumber(login: self.login) { (cardNumber) in
                                                 
+                                                self.localCardNumber = cardNumber
                                                 self.cardNumber.text = cardNumber
                                                 self.cardNumber.isHidden = false
                                                 let writer = ZXMultiFormatWriter()
@@ -95,21 +98,30 @@ class ViewController: UIViewController, UITextFieldDelegate {
                                                 self.logoutButton.isHidden = false
                                                 self.userNameField.text = userName
                                                 self.hideHUD()
+                                                self.wasLogged = true
+                                                UserDefaults.standard.set(true, forKey: "wasLogged")
+                                                UserDefaults.standard.set(userName, forKey: "userName")
+                                                UserDefaults.standard.set(cardNumber, forKey: "cardNumber")
+                                                UserDefaults.standard.set(self.login, forKey: "login")
                                                 
                                             }
                                             
                                         } else {
-                                            
+                                            //TODO - srpwdzaac was logged gdy jest user w firestore i gdy go nie ma
                                             self.logoutButton.isHidden = false
                                             self.userNameField.text = userName
                                             self.hideHUD()
+                                            self.wasLogged = true
+                                            UserDefaults.standard.set(true, forKey: "wasLogged")
+                                            UserDefaults.standard.set(userName, forKey: "userName")
+                                            UserDefaults.standard.set(self.login, forKey: "login")
                                             
                                         }
                                         
                                     }
                                 
                                 } else {
-                                     print("PJ error != nil")
+//                                     print("PJ error != nil")
                                     self.showLogin()
                                     self.hideHUD()
                                     
@@ -172,6 +184,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
            self.barcodeImage.isHidden = true
            self.showLogin()
            self.logoutButton.isHidden = true
+            self.wasLogged = false //TODO usunac z userdefault
+            UserDefaults.standard.set(false, forKey: "wasLogged")
+            UserDefaults.standard.set("", forKey: "login")
+            UserDefaults.standard.set("", forKey: "userName")
+            UserDefaults.standard.set("", forKey: "cardNumber")
+            
+            
         print("You've pressed the destructive")
         }
 
@@ -196,6 +215,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var button: UIButton!
     
     var wasLogged = false
+    var localCardNumber = ""
+    var localUserName = ""
+    var localLogin = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -207,20 +229,103 @@ class ViewController: UIViewController, UITextFieldDelegate {
             eventList1 = list1
             eventList2 = list2
         }
-        
-        
+
    
         
     }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("PJ touches Began")
+        view.endEditing(true)
+        super.touchesBegan(touches, with: event)
+    }
+    
+    
     override func viewDidAppear(_ animated: Bool) {
       
         print("PJ VC viewdidappera")
-        
-
-        
         hideHUD()
         emailField.delegate = self
         passwordField.delegate = self
+        
+        
+//        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+//        view.addGestureRecognizer(tap)
+        let defaults = UserDefaults.standard
+        let checkWasLogged = defaults.bool(forKey: "wasLogged")
+        
+        print("PJ nigdy nie było checkwaslogged ustawione \(checkWasLogged)")
+        
+        
+
+        if checkWasLogged {
+        
+            
+            
+            
+            hideLogin()
+            localLogin = defaults.string(forKey: "login") ?? ""
+            localUserName = defaults.string(forKey: "userName") ?? ""
+            
+            print("PJ odczytany username z UD: \(localUserName)")
+            localCardNumber = defaults.string(forKey: "cardNumber") ?? ""
+            
+            userNameField.text = localUserName
+           
+            logoutButton.isHidden = false
+           
+            if (localCardNumber == "") {
+                cardNumber.isHidden = true
+                barcodeImage.isHidden = true
+                
+                FirebaseManager.sharedInstance.checkIfExist(login: localLogin) { (exist) in
+                               
+                    if exist {
+                        FirebaseManager.sharedInstance.getCardNumber(login: self.localLogin) { (cNumber) in
+                            UserDefaults.standard.set(cNumber, forKey: "cardNumber")
+                            self.cardNumber.text = cNumber
+                            self.cardNumber.isHidden = false
+                           let writer = ZXMultiFormatWriter()
+                           do {
+                               let result = try writer.encode(cNumber, format: kBarcodeFormatITF, width: 240, height: 100)
+                               let zx = ZXImage(matrix: result)
+                               let cg = zx?.cgimage
+                               let img = UIImage(cgImage: cg!)
+                               self.barcodeImage.image = img
+                               self.barcodeImage.isHidden = false
+                           } catch {
+                               print("PJ \(error)")
+                           }
+                            
+                        }
+                    }
+                }
+                
+                
+            } else {
+                cardNumber.text = localCardNumber
+                cardNumber.isHidden = false
+                let writer = ZXMultiFormatWriter()
+                do {
+                    let result = try writer.encode(localCardNumber, format: kBarcodeFormatITF, width: 240, height: 100)
+                    let zx = ZXImage(matrix: result)
+                    let cg = zx?.cgimage
+                    let img = UIImage(cgImage: cg!)
+                    self.barcodeImage.image = img
+                    self.barcodeImage.isHidden = false
+                } catch {
+                    print("PJ \(error)")
+                }
+            }
+            
+            
+            
+            
+        }
+        
+        
+        
               
 
     }
@@ -288,3 +393,5 @@ extension UIColor {
         return nil
     }
 }
+
+
