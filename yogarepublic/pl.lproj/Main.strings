@@ -1,0 +1,27 @@
+
+/* Class = "UIButton"; normalTitle = "MAŁA SALA"; ObjectID = "1Dl-W3-Kmv"; */
+"1Dl-W3-Kmv.normalTitle" = "MAŁA SALA";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "1Po-q0-qW4"; */
+"1Po-q0-qW4.text" = "Label";
+
+/* Class = "UITabBarItem"; title = "Timetable"; ObjectID = "7Ne-zh-Xkp"; */
+"7Ne-zh-Xkp.title" = "Grafik zajęć";
+
+/* Class = "UIButton"; normalTitle = "Logout"; ObjectID = "8ce-k7-7bX"; */
+"8ce-k7-7bX.normalTitle" = "Wyloguj";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "NFl-gO-P6G"; */
+"NFl-gO-P6G.normalTitle" = "Zaloguj";
+
+/* Class = "UIButton"; normalTitle = "DUŻA SALA"; ObjectID = "Npk-Jl-wa4"; */
+"Npk-Jl-wa4.normalTitle" = "DUŻA SALA";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "a7T-7d-Qqw"; */
+"a7T-7d-Qqw.placeholder" = "Hasło";
+
+/* Class = "UITabBarItem"; title = "My card"; ObjectID = "fE7-Qi-t2g"; */
+"fE7-Qi-t2g.title" = "Moja karta";
+
+/* Class = "UITextField"; placeholder = "Your email address"; ObjectID = "ltB-B2-xqQ"; */
+"ltB-B2-xqQ.placeholder" = "Wpis adres email";

@@ -26,9 +26,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         showHUD()
         
         if (emailField.text?.isEmpty ?? true || passwordField.text?.isEmpty ?? true) {
-            let alertController = UIAlertController(title: "Ups!", message:
-                   "Email and password cannot be empty.", preferredStyle: .alert)
-               alertController.addAction(UIAlertAction(title: "OK", style: .default))
+            let alertController = UIAlertController(title: NSLocalizedString("Ups!", comment: ""), message:
+                   NSLocalizedString("Email and password cannot be empty.", comment: ""), preferredStyle: .alert)
+               alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
 
                self.present(alertController, animated: true, completion: nil)
             showLogin()
@@ -44,9 +44,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
             AlamofireManager.sharedInstance.efitnessLogin(email: login, password: password) { (accessToken) in
                 
                 if (accessToken.starts(with: "-1")) {
-                    let alertController = UIAlertController(title: "Incorrect email or password.", message:
-                        "Try again", preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "OK", style: .default))
+                    let alertController = UIAlertController(title: NSLocalizedString("Incorrect email or password.", comment: ""), message:
+                        NSLocalizedString("Try again", comment: ""), preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
                     self.present(alertController, animated: true, completion: nil)
                     self.showLogin()
                     self.hideHUD()
@@ -57,9 +57,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     AlamofireManager.sharedInstance.getMemberInfo(token: accessToken) { (userName) in
                         
                         if (userName.starts(with: "-1")) {
-                            let alertController = UIAlertController(title: "Error downloading data", message:
-                            "Try again", preferredStyle: .alert)
-                            alertController.addAction(UIAlertAction(title: "Try again later", style: .default))
+                            let alertController = UIAlertController(title:  NSLocalizedString("Error downloading data", comment: ""), message:
+                            NSLocalizedString("Try again", comment: ""), preferredStyle: .alert)
+                            alertController.addAction(UIAlertAction(title: NSLocalizedString("Try again later", comment: ""), style: .default))
                             self.present(alertController, animated: true, completion: nil)
                             self.showLogin()
                             self.hideHUD()
@@ -157,14 +157,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func logoutButton(_ sender: Any) {
     
-        let alertController = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: NSLocalizedString("Log out", comment: ""), message: NSLocalizedString("Are you sure you want to log out?", comment: ""), preferredStyle: .actionSheet)
                 
-        let action1 = UIAlertAction(title: "No", style: .default) { (action:UIAlertAction) in
+        let action1 = UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .default) { (action:UIAlertAction) in
             print("You've pressed default")
         }
 
 
-        let action3 = UIAlertAction(title: "Yes", style: .destructive) { (action:UIAlertAction) in
+        let action3 = UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive) { (action:UIAlertAction) in
             self.passwordField.text = ""
            self.emailField.text = ""
            self.userNameField.text = ""

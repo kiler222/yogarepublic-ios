@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C38481B35E40F90513B77C3D /* Pods_yogarepublic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C91DC5166EABB17E063B211 /* Pods_yogarepublic.framework */; };
+		E501188023F420070041A629 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E501188223F420070041A629 /* Localizable.strings */; };
 		E55EBC8C23F0CD0400699BCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55EBC8B23F0CD0400699BCE /* AppDelegate.swift */; };
 		E55EBC8E23F0CD0400699BCE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55EBC8D23F0CD0400699BCE /* SceneDelegate.swift */; };
 		E55EBC9023F0CD0400699BCE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55EBC8F23F0CD0400699BCE /* ViewController.swift */; };
@@ -26,7 +27,12 @@
 /* Begin PBXFileReference section */
 		1C91DC5166EABB17E063B211 /* Pods_yogarepublic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_yogarepublic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C94FFE7F60505D29438DC53 /* Pods-yogarepublic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yogarepublic.debug.xcconfig"; path = "Target Support Files/Pods-yogarepublic/Pods-yogarepublic.debug.xcconfig"; sourceTree = "<group>"; };
-		E55EBC8823F0CD0400699BCE /* yogarepublic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yogarepublic.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E501187E23F41FEB0041A629 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Main.strings; sourceTree = "<group>"; };
+		E501187F23F41FED0041A629 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		E501188123F420070041A629 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E501188323F420120041A629 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E501188523F420260041A629 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		E55EBC8823F0CD0400699BCE /* Yoga Republic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yoga Republic.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55EBC8B23F0CD0400699BCE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E55EBC8D23F0CD0400699BCE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E55EBC8F23F0CD0400699BCE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -86,7 +92,7 @@
 		E55EBC8923F0CD0400699BCE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E55EBC8823F0CD0400699BCE /* yogarepublic.app */,
+				E55EBC8823F0CD0400699BCE /* Yoga Republic.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,6 +114,7 @@
 				E55EBC9623F0CD0C00699BCE /* LaunchScreen.storyboard */,
 				E55EBC9923F0CD0C00699BCE /* Info.plist */,
 				E55EBCA723F1A48300699BCE /* TimeViewController.swift */,
+				E501188223F420070041A629 /* Localizable.strings */,
 			);
 			path = yogarepublic;
 			sourceTree = "<group>";
@@ -131,7 +138,7 @@
 			);
 			name = yogarepublic;
 			productName = yogarepublic;
-			productReference = E55EBC8823F0CD0400699BCE /* yogarepublic.app */;
+			productReference = E55EBC8823F0CD0400699BCE /* Yoga Republic.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -156,6 +163,7 @@
 			knownRegions = (
 				en,
 				Base,
+				pl,
 			);
 			mainGroup = E55EBC7F23F0CD0400699BCE;
 			productRefGroup = E55EBC8923F0CD0400699BCE /* Products */;
@@ -173,6 +181,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E55EBC9823F0CD0C00699BCE /* LaunchScreen.storyboard in Resources */,
+				E501188023F420070041A629 /* Localizable.strings in Resources */,
 				E55EBCAC23F2C9D700699BCE /* GoogleService-Info.plist in Resources */,
 				E55EBCAE23F3F8F800699BCE /* Variable_bold.otf in Resources */,
 				E55EBC9523F0CD0C00699BCE /* Assets.xcassets in Resources */,
@@ -243,10 +252,21 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		E501188223F420070041A629 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E501188123F420070041A629 /* en */,
+				E501188323F420120041A629 /* pl */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		E55EBC9123F0CD0400699BCE /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				E55EBC9223F0CD0400699BCE /* Base */,
+				E501187E23F41FEB0041A629 /* pl */,
+				E501188523F420260041A629 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -255,6 +275,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				E55EBC9723F0CD0C00699BCE /* Base */,
+				E501187F23F41FED0041A629 /* pl */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -266,6 +287,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -326,6 +348,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -389,7 +412,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kiler.yogarepublic;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Yoga Republic";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -408,7 +431,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kiler.yogarepublic;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Yoga Republic";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

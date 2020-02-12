@@ -15,9 +15,9 @@ class TimeViewController: UIViewController {
        
         
         if (eventList2.isEmpty) {
-            let alertController = UIAlertController(title: "Updating data", message:
-                   "Please try later...", preferredStyle: .alert)
-               alertController.addAction(UIAlertAction(title: "OK", style: .default))
+            let alertController = UIAlertController(title: NSLocalizedString("Updating data", comment: ""), message:
+                             NSLocalizedString("Please try later...", comment: ""), preferredStyle: .alert)
+                         alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
 
                self.present(alertController, animated: true, completion: nil)
         } else {
@@ -33,9 +33,9 @@ class TimeViewController: UIViewController {
     @IBAction func room1(_ sender: Any) {
         
         if (eventList1.isEmpty) {
-           let alertController = UIAlertController(title: "Updating data", message:
-                  "Please try later...", preferredStyle: .alert)
-              alertController.addAction(UIAlertAction(title: "OK", style: .default))
+           let alertController = UIAlertController(title: NSLocalizedString("Updating data", comment: ""), message:
+                  NSLocalizedString("Please try later...", comment: ""), preferredStyle: .alert)
+              alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
 
               self.present(alertController, animated: true, completion: nil)
         } else {
