@@ -1,0 +1,23 @@
+/* 
+  Localizable.strings
+  yogarepublic
+
+  Created by kiler on 12/02/2020.
+  Copyright © 2020 kiler. All rights reserved.
+*/
+"Error downloading data" = "Pobierania danych";
+"Try again" = "Spóbuj ponownie";
+"Try again later" = "Spóbuj ponownie za chwilę";
+"Try again later..." = "Spóbuj ponownie za chwilę";
+
+"Incorrect email or password." = "Niepoprawny email lub hasło";
+"OK" = "OK";
+"Ups!" = "Ups!";
+"Email and password cannot be empty." = "Email i hasło nie mogą być puste.";
+"Log out" = "Wyloguj";
+"Are you sure you want to log out?" = "Na pewno chcesz się wylogować";
+"No" = "Nie";
+"Yes" = "Tak";
+"Updating data" = "Aktualizowanie grafików";
+"Please try later..." = "Spróbuj ponownie za chwilę...";
+

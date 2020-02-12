@@ -15,7 +15,7 @@
         <!--My card-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="yogarepublic" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="Yoga_Republic" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -96,6 +96,12 @@
                                     <action selector="logoutButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mT0-by-q1D"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="it's a natural high" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NK9-5H-Urp" userLabel="its a natural high">
+                                <rect key="frame" x="114.5" y="568.5" width="146" height="24.5"/>
+                                <fontDescription key="fontDescription" name="Variable-Bold" family="Variable" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -116,6 +122,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2TP-Gx-zev" secondAttribute="trailing" id="Zoa-Yx-OTe"/>
                             <constraint firstItem="8ce-k7-7bX" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="au0-pZ-QEx"/>
                             <constraint firstItem="0Yj-Ay-LQS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="bUf-IR-yX0"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="NK9-5H-Urp" secondAttribute="bottom" constant="25" id="e1B-6X-k2O"/>
                             <constraint firstItem="a7T-7d-Qqw" firstAttribute="top" secondItem="ltB-B2-xqQ" secondAttribute="bottom" constant="8" id="evP-Av-qix"/>
                             <constraint firstItem="1Po-q0-qW4" firstAttribute="trailing" secondItem="IDL-X7-5N6" secondAttribute="trailing" id="g7q-jR-KNX"/>
                             <constraint firstItem="ltB-B2-xqQ" firstAttribute="top" secondItem="2TP-Gx-zev" secondAttribute="bottom" constant="32" id="gAY-L7-oWX"/>
@@ -123,6 +130,7 @@
                             <constraint firstItem="rTl-tC-hJv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="iit-ct-EVq"/>
                             <constraint firstItem="IDL-X7-5N6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="lzc-9i-EZN"/>
                             <constraint firstItem="a7T-7d-Qqw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pxi-Mb-hWN"/>
+                            <constraint firstItem="NK9-5H-Urp" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qos-x9-XLh"/>
                             <constraint firstAttribute="trailing" secondItem="0Yj-Ay-LQS" secondAttribute="trailing" id="r4c-iN-sS7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -148,7 +156,7 @@
         <!--Timetable-->
         <scene sceneID="4ea-va-hgt">
             <objects>
-                <viewController id="1f4-tn-h6L" customClass="TimeViewController" customModule="yogarepublic" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="1f4-tn-h6L" customClass="TimeViewController" customModule="Yoga_Republic" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aE7-sg-Dbn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -217,6 +225,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="vdP-oi-BAE" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ge0-Mb-baa">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="selectedImageTintColor" red="0.79607843140000001" green="0.26274509800000001" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
