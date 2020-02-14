@@ -21,6 +21,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var password = ""
     
     //TODO - chowac klawiature gdy user kliknie przycisk zalogu j zmiast entera naklawiaturze
+    //TODO - dodac link do resetowania hasła
+    
     @IBAction func button(_ sender: Any) {
         
         hideLogin()
@@ -204,6 +206,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+    @IBAction func forgetPasswordButton(_ sender: Any) {
+        
+        let link = "https://yogarepublic-cms.efitness.com.pl/Login/SystemResetPassword?returnurl=https%3A%2F%2Fyogarepublic-cms.efitness.com.pl%2F"
+
+            UIApplication.shared.open(URL(string: link)!)
+        
+    }
+   
+    
+    @IBOutlet weak var forgetPasswordButton: UIButton!
     
     @IBOutlet weak var logoutButton: UIButton!
     @IBOutlet weak var progressIndicator: UIActivityIndicatorView!
@@ -249,6 +261,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         emailField.delegate = self
         passwordField.delegate = self
         
+        
+        forgetPasswordButton.setTitle(NSLocalizedString("Forgot password?", comment: ""), for: .normal)
         
 //        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
 //        view.addGestureRecognizer(tap)
@@ -344,12 +358,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
         emailField.isHidden = false
         passwordField.isHidden = false
         button.isHidden = false
+        forgetPasswordButton.isHidden = false
     }
 
     func hideLogin(){
         emailField.isHidden = true
         passwordField.isHidden = true
         button.isHidden = true
+        forgetPasswordButton.isHidden = true 
     }
     
   

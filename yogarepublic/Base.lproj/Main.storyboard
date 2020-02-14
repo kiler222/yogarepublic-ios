@@ -37,7 +37,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NFl-gO-P6G" userLabel="Login">
-                                <rect key="frame" x="164" y="308" width="47" height="37"/>
+                                <rect key="frame" x="164" y="327" width="47" height="37"/>
                                 <fontDescription key="fontDescription" name="Variable-Bold" family="Variable" pointSize="20"/>
                                 <state key="normal" title="Login">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -82,6 +82,16 @@
                                     <action selector="emailFieldDidEndOnExit:" destination="BYZ-38-t0r" eventType="editingDidEndOnExit" id="bh6-3e-3jv"/>
                                 </connections>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AuM-ge-VBB" userLabel="Forget password">
+                                <rect key="frame" x="143.5" y="300" width="88" height="27"/>
+                                <fontDescription key="fontDescription" name="Variable-Bold" family="Variable" pointSize="12"/>
+                                <state key="normal" title="Forget password">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="forgetPasswordButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JSc-n0-1zk"/>
+                                </connections>
+                            </button>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="rTl-tC-hJv">
                                 <rect key="frame" x="169" y="315" width="37" height="37"/>
                                 <color key="color" red="0.79607843140000001" green="0.26274509800000001" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -107,7 +117,7 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="0Yj-Ay-LQS" secondAttribute="bottom" id="4sR-ov-hD2"/>
                             <constraint firstItem="rTl-tC-hJv" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="5pA-BI-veX"/>
-                            <constraint firstItem="NFl-gO-P6G" firstAttribute="top" secondItem="a7T-7d-Qqw" secondAttribute="bottom" constant="8" id="76Q-8c-zLu"/>
+                            <constraint firstItem="NFl-gO-P6G" firstAttribute="top" secondItem="AuM-ge-VBB" secondAttribute="bottom" id="76Q-8c-zLu"/>
                             <constraint firstItem="ltB-B2-xqQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="EXE-yW-96C"/>
                             <constraint firstItem="IDL-X7-5N6" firstAttribute="top" secondItem="2TP-Gx-zev" secondAttribute="bottom" constant="32" id="Hil-OE-kZR"/>
                             <constraint firstItem="DaI-UW-Baq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="32" id="ILF-SN-Hd7"/>
@@ -129,9 +139,11 @@
                             <constraint firstItem="8ce-k7-7bX" firstAttribute="top" secondItem="1Po-q0-qW4" secondAttribute="bottom" constant="8" id="iTv-4X-4Vg"/>
                             <constraint firstItem="rTl-tC-hJv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="iit-ct-EVq"/>
                             <constraint firstItem="IDL-X7-5N6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="lzc-9i-EZN"/>
+                            <constraint firstItem="AuM-ge-VBB" firstAttribute="top" secondItem="a7T-7d-Qqw" secondAttribute="bottom" id="nzG-aH-jkU"/>
                             <constraint firstItem="a7T-7d-Qqw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pxi-Mb-hWN"/>
                             <constraint firstItem="NK9-5H-Urp" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qos-x9-XLh"/>
                             <constraint firstAttribute="trailing" secondItem="0Yj-Ay-LQS" secondAttribute="trailing" id="r4c-iN-sS7"/>
+                            <constraint firstItem="AuM-ge-VBB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="sLG-Pj-JNb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -143,6 +155,7 @@
                         <outlet property="button" destination="NFl-gO-P6G" id="03m-GF-8Yy"/>
                         <outlet property="cardNumber" destination="1Po-q0-qW4" id="gZ9-jf-Thi"/>
                         <outlet property="emailField" destination="ltB-B2-xqQ" id="R8h-j2-kbG"/>
+                        <outlet property="forgetPasswordButton" destination="AuM-ge-VBB" id="Hns-Hi-9JB"/>
                         <outlet property="logoutButton" destination="8ce-k7-7bX" id="zJg-WO-wWe"/>
                         <outlet property="passwordField" destination="a7T-7d-Qqw" id="4AE-6Q-ndx"/>
                         <outlet property="progressIndicator" destination="rTl-tC-hJv" id="zTb-kH-Bbw"/>
@@ -192,6 +205,10 @@
                                     <action selector="room2:" destination="1f4-tn-h6L" eventType="touchUpInside" id="Hf6-dW-IRd"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="6En-J5-GVv">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <color key="color" red="0.79607843140000001" green="0.26274509800000001" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -201,8 +218,10 @@
                             <constraint firstItem="lcX-dj-8rH" firstAttribute="top" secondItem="aE7-sg-Dbn" secondAttribute="top" id="AJ6-km-rZy"/>
                             <constraint firstAttribute="trailing" secondItem="lcX-dj-8rH" secondAttribute="trailing" id="Byf-65-wxo"/>
                             <constraint firstItem="1Dl-W3-Kmv" firstAttribute="centerX" secondItem="aE7-sg-Dbn" secondAttribute="centerX" constant="0.5" id="Krx-mo-l3U"/>
+                            <constraint firstItem="6En-J5-GVv" firstAttribute="centerX" secondItem="aE7-sg-Dbn" secondAttribute="centerX" id="Von-D3-HMq"/>
                             <constraint firstAttribute="bottom" secondItem="lcX-dj-8rH" secondAttribute="bottom" id="XjH-XU-cvM"/>
                             <constraint firstItem="1Dl-W3-Kmv" firstAttribute="top" secondItem="wBX-qy-RoY" secondAttribute="top" constant="64" id="aun-yK-uRO"/>
+                            <constraint firstItem="6En-J5-GVv" firstAttribute="centerY" secondItem="aE7-sg-Dbn" secondAttribute="centerY" id="ndl-ZZ-1J0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="wBX-qy-RoY"/>
                     </view>
@@ -211,6 +230,7 @@
                     </tabBarItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="progressIndicator" destination="6En-J5-GVv" id="mZW-dX-fqa"/>
                         <outlet property="room1" destination="1Dl-W3-Kmv" id="ZcA-Oo-62I"/>
                         <outlet property="room2" destination="Npk-Jl-wa4" id="E7i-Yp-DK5"/>
                     </connections>

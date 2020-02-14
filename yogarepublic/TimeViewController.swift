@@ -48,6 +48,7 @@ class TimeViewController: UIViewController {
     @IBOutlet weak var room1: UIButton!
     @IBOutlet weak var room2: UIButton!
     
+    @IBOutlet weak var progressIndicator: UIActivityIndicatorView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -63,6 +64,17 @@ class TimeViewController: UIViewController {
 //         room1.layer.borderWidth   = 3.0
 //         room1.layer.borderColor   = UIColor.darkGray.cgColor
 
+        if (eventList1.isEmpty || eventList2.isEmpty) {
+            showHUD()
+            AlamofireManager.sharedInstance.fetchAllRooms(){ (list1, list2) in
+                       //TODO - dorobic konwersje eventlist do json i zapisywania potem w userdefaults.
+                       eventList1 = list1
+                       eventList2 = list2
+                self.hideHUD()
+                   }
+        } else {
+            hideHUD()
+        }
         
          
         room1.alignTextBelow(spacing: 10.0)
@@ -87,16 +99,16 @@ class TimeViewController: UIViewController {
     
     
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func showHUD(){
+        progressIndicator.startAnimating()
+        progressIndicator.isHidden = false
     }
-    */
+    
+    func hideHUD(){
+        progressIndicator.stopAnimating()
+        progressIndicator.isHidden = true
+    }
+
 
 }
 

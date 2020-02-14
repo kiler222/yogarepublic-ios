@@ -15,9 +15,9 @@
 "Ups!" = "Ups!";
 "Email and password cannot be empty." = "Email i hasło nie mogą być puste.";
 "Log out" = "Wyloguj";
-"Are you sure you want to log out?" = "Na pewno chcesz się wylogować";
+"Are you sure you want to log out?" = "Na pewno chcesz się wylogować?";
 "No" = "Nie";
 "Yes" = "Tak";
 "Updating data" = "Aktualizowanie grafików";
 "Please try later..." = "Spróbuj ponownie za chwilę...";
-
+"Forgot password?" = "Nie pamiętasz hasła?";
