@@ -11,7 +11,7 @@ import CalendarKit
 import FirebaseAuth
 import AVFoundation
 import ZXingObjC
-
+//import Keys
 
 var eventList1 : [Event] = []
 var eventList2 : [Event] = []
@@ -44,7 +44,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             login = emailField.text ?? ""
             password = passwordField.text ?? ""
             
-            AlamofireManager.sharedInstance.efitnessLogin(email: login, password: password) { (accessToken) in
+            AlamofireManager.sharedInstance.efitnessLogin(email: login, password: password) { (accessToken, id) in
                 
                 if (accessToken.starts(with: "-1")) {
                     let alertController = UIAlertController(title: NSLocalizedString("Incorrect email or password.", comment: ""), message:
@@ -55,7 +55,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     self.hideHUD()
                 } else {
                     
-//                    print("PJ token odczytany: \(accessToken)")
+                    print("PJ  odczytany userID: \(id)")
                     
                     AlamofireManager.sharedInstance.getMemberInfo(token: accessToken) { (userName) in
                         
@@ -71,17 +71,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
 //                            print("PJ tutajjjjj")
                             Auth.auth().signInAnonymously() { (authResult, error) in
                               // ...
-                                print("PJ error: \(error)")
+//                                print("PJ error: \(error)")
                                 if (error == nil){
                                     
                                     self.localLogin = self.login
-                                    FirebaseManager.sharedInstance.checkIfExist(login: self.login) { (exist) in
+                                    FirebaseManager.sharedInstance.checkIfExist(login: id) { (exist) in
                                         
                                         if (exist) {
                                             
-                                            FirebaseManager.sharedInstance.updateLastLogin(login: self.login)
+                                            FirebaseManager.sharedInstance.updateLastLogin(login: id)
                                             
-                                            FirebaseManager.sharedInstance.getCardNumber(login: self.login) { (cardNumber) in
+                                            FirebaseManager.sharedInstance.getCardNumber(login: id) { (cardNumber) in
                                                 
                                                 self.localCardNumber = cardNumber
                                                 self.cardNumber.text = cardNumber
@@ -126,7 +126,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
 //                                     print("PJ error != nil")
                                     self.showLogin()
                                     self.hideHUD()
-                                    
+
                                 }
                             }
                             

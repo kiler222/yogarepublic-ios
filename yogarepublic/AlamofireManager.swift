@@ -9,19 +9,26 @@
 import Foundation
 import Alamofire
 import CalendarKit
-
+import Keys
 
 class AlamofireManager: NSObject {
 
 
      static let sharedInstance  = AlamofireManager()
+     
+    let eftinessToken = YogarepublicKeys().efitnessToken
+//    ARAnalytics.setupWithAnalytics(keys.analyticsToken)
+//    let eftinessToken = keys.efitnessToken
+    
     
 // With Alamofire
 func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
+    
+//    print("PJ token z keys: \(eftinessToken)")
     var eventList1 : [Event] = []
     var eventList2 : [Event] = []
     let headers: HTTPHeaders = [
-        "api-access-token": "bih/AiXX0k2mqZGz44y+Ag==",
+        "api-access-token": eftinessToken,
         "Accept": "application/json"
     ]
     
@@ -121,42 +128,13 @@ func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
   }
 }
 
-    /*
-     
-         Fuel.get("https://api-frontend2.efitness.com.pl/api/clubs/324/members")
-             .header("Accept" to "application/json")
-             .header("api-access-token" to token)
-             .header("member-token" to "bearer $memberToken")
-             .also { println(it) }
-             .responseString { _, response, result ->
-
-
-                 val (data, error) = result
-
-     //            Log.e(TAG, "pobrany member - ${error}")
-     //            Log.e(TAG, "response - ${JSONArray(data)}")
-
-                 var obj = JSONObject(data)
-
-                 val firstName = obj.getString("firstName")
-                 val lastName = obj.getString("lastName")
-
-     //            Log.e(TAG, obj.toString())
-     //            Log.e(TAG, firstName + " " + lastName)
-
-                 callback(firstName + " " + lastName)
-
-             }
-     
-     
-     */
-    
+  
     
     
     
     func getMemberInfo(token: String, completion: @escaping (String) -> Void) {
         let headers: HTTPHeaders = [
-              "api-access-token": "bih/AiXX0k2mqZGz44y+Ag==",
+              "api-access-token": eftinessToken,
               "Accept": "application/json",
               "member-token" : "bearer \(token)"
           ]
@@ -202,9 +180,9 @@ func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
     }
     
     
-    func efitnessLogin(email: String, password: String, completion: @escaping (String) -> Void) {
+    func efitnessLogin(email: String, password: String, completion: @escaping (String, String) -> Void) {
         let headers: HTTPHeaders = [
-              "api-access-token": "bih/AiXX0k2mqZGz44y+Ag==",
+              "api-access-token": eftinessToken,
               "Accept": "application/json",
               "Content-type": "application/json"
           ]
@@ -212,7 +190,7 @@ func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
 
           
         guard let url = URL(string: "https://api-frontend2.efitness.com.pl/api/clubs/324/token/member") else {
-          completion("-1: zly adres api")
+          completion("-1: zly adres api", "-1")
           return
         }
         
@@ -225,21 +203,22 @@ func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
           .responseJSON { response in
             guard response.result.isSuccess else {
               print("Error while fetching remote rooms: \(response.result.error)")
-              completion("-1: blad z serwera")
+              completion("-1: blad z serwera", "-1")
               return
             }
 
             
             guard let value = response.result.value as? [String: Any],
-            
+                
                 let accessToken = value["accessToken"] as? String else {
                 print("Malformed data received from fetchAllRooms service")
-                completion("-1: blad odczytu danych")
+                completion("-1: blad odczytu danych", "-1" )
                 return
             }
             
-         
-            completion(accessToken)
+            let userID = value["id"] as! String
+            
+            completion(accessToken, userID)
             
            }
 
