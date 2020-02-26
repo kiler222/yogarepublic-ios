@@ -46,7 +46,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
         } else {
         
 //            print("PJ email: \(emailField.text), pass: \(passwordField.text)")
-            
+            view.endEditing(true)
             login = emailField.text ?? ""
             password = passwordField.text ?? ""
             
@@ -195,7 +195,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     
     @IBAction func passwordDidEndOnExit(_ sender: Any) {
         print("PJ password did end on exti")
-        
         button(sender)
         
     }
@@ -218,11 +217,14 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
            self.barcodeImage.isHidden = true
            self.showLogin()
            self.logoutButton.isHidden = true
-            self.wasLogged = false //TODO usunac z userdefault
+            self.tableView.isHidden = true
+            self.wasLogged = false
             UserDefaults.standard.set(false, forKey: "wasLogged")
             UserDefaults.standard.set("", forKey: "login")
             UserDefaults.standard.set("", forKey: "userName")
             UserDefaults.standard.set("", forKey: "cardNumber")
+            UserDefaults.standard.set("", forKey: "accessToken")
+            UserDefaults.standard.set("", forKey: "refreshToken")
             
             
         print("You've pressed the destructive")
@@ -301,6 +303,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
         hideHUD()
         emailField.delegate = self
         passwordField.delegate = self
+        tableView.allowsSelection = false
+        tableView.separatorInset = .zero
         
         
         forgetPasswordButton.setTitle(NSLocalizedString("Forgot password?", comment: ""), for: .normal)
@@ -319,9 +323,11 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
             let refToken = defaults.string(forKey: "refreshToken") ?? ""
             let accessToken = defaults.string(forKey: "accessToken") ?? ""
             
-            print("PJ !!!!    reftoken: \(refToken), access: \(accessToken)")
-            
-            AlamofireManager.sharedInstance.refreshUserToken(accessToken: accessToken, refreshToken: refToken) { (accessToken, id, refreshToken) in
+//            print("PJ !!!!    reftoken: \(refToken), access: \(accessToken)")
+             showHUD()
+            AlamofireManager.sharedInstance.refreshUserToken(accessToken: accessToken, refreshToken: refToken) {
+                (accessToken, id, refreshToken) in
+                self.hideHUD()
                 print("PJ po refreshu: id = \(id) i reftoken = \(refreshToken),  acctoken = \(accessToken)")
                 
                 if !accessToken.hasPrefix("-1"){
@@ -333,9 +339,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                             print("PJ error odczytaywania membership: \(memberships[0].name)")
                         } else {
                             
-                            memberships.forEach { (x) in
-                                print("PJ memb: \(x.name), \(x.expirationDate), \(x.isValid)")
-                            }
+//                            memberships.forEach { (x) in
+//                                print("PJ memb: \(x.name), \(x.expirationDate), \(x.isValid)")
+//                            }
                             
                             self.recievedMemberships = memberships.sorted(by: {$0.expirationDate > $1.expirationDate})
                             self.tableView.isHidden = false
@@ -353,7 +359,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
             localLogin = defaults.string(forKey: "login") ?? ""
             localUserName = defaults.string(forKey: "userName") ?? ""
             
-            print("PJ odczytany username z UD: \(localUserName)")
+//            print("PJ odczytany username z UD: \(localUserName)")
             localCardNumber = defaults.string(forKey: "cardNumber") ?? ""
             
             userNameField.text = localUserName
@@ -429,12 +435,13 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
         if recievedMemberships.count > 0 {
     
             if (recievedMemberships[indexPath.row].isValid == true) {
-                cell.statusDot.tintColor = .green
+                
+                cell.statusDot.tintColor = UIColor(displayP3Red: 51.0/255.0, green: 188.0/255.0, blue: 51.0/255.0, alpha: 1.0)
             } else {
-                cell.statusDot.tintColor = .red
+                cell.statusDot.tintColor = UIColor(displayP3Red: 255.0/255.0, green: 51.0/255.0, blue: 0.0/255.0, alpha: 1.0)
             }
             cell.membershipLabel.text = recievedMemberships[indexPath.row].name
-            cell.expirationDate.text = recievedMemberships[indexPath.row].expirationDate.string(format: "yyyy-MM-dd")
+            cell.expirationDate.text = recievedMemberships[indexPath.row].expirationDate.string(format: "dd-MM-yyyy")
 
         }
 
@@ -445,9 +452,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
         return 1
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "asdfghjkl"
-    }
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return "asdfghjkl"
+//    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
@@ -466,7 +473,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
 
         
         let headerView = UIView.init(frame: CGRect.init(x: 8, y: 0, width: tableView.frame.width - 8, height: 30))
-       headerView.backgroundColor = UIColor.lightGray
+       headerView.backgroundColor = UIColor.lightGray //init(hex: "9EA09CFF")
         
         
         
@@ -495,18 +502,18 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
 //        textLabel.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
         
         textLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        textLabel.text  = "Memberships"
+        textLabel.text  = NSLocalizedString("Memberships", comment: "")
         textLabel.font = UIFont(name: "Variable-Bold", size: 12)
         textLabel.textAlignment = .left
         
          let dateLabel = UILabel()
         //        textLabel.backgroundColor = UIColor.yellow
-                dateLabel.textColor = .white
-                dateLabel.widthAnchor.constraint(equalToConstant: 60).isActive = true
-                dateLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
-                dateLabel.text  = "Valid till"
-                dateLabel.font = UIFont(name: "Variable-Bold", size: 12)
-                dateLabel.textAlignment = .center
+        dateLabel.textColor = .white
+        dateLabel.widthAnchor.constraint(equalToConstant: 90).isActive = true
+        dateLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        dateLabel.text  = NSLocalizedString("Valid till", comment: "")
+        dateLabel.font = UIFont(name: "Variable-Bold", size: 12)
+        dateLabel.textAlignment = .left
 
         //Stack View
        
@@ -519,7 +526,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
         
         stackView.addArrangedSubview(textLabel)
         stackView.addArrangedSubview(dateLabel)
-        stackView.addArrangedSubview(imageView)
+//        stackView.addArrangedSubview(imageView)
 //        imageView.rightAnchor.constraint(equalTo: stackView.rightAnchor, constant: 0).isActive = true
 //        imageView.anchorToEdge(.right, padding: 0, width: 30, height: 30)
         textLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 8).isActive = true
