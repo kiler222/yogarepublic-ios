@@ -41,91 +41,115 @@ func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
     completion(eventList1, eventList2)
     return
   }
-  Alamofire.request(url,
-                    method: .get, headers: headers)
+  AF.request(url, method: .get, headers: headers)
   .validate()
   .responseJSON { response in
-    guard response.result.isSuccess else {
-      print("Error while fetching remote rooms: \(response.result.error)")
-      completion(eventList1, eventList2)
-      return
-    }
-
-    guard let value = response.result.value as? [String: Any],
-      let events = value["results"] as? [[String: Any]] else {
-        print("Malformed data received from fetchAllRooms service")
-        completion(eventList1, eventList2)
-        return
-    }
-
     
-    events.forEach { (item) in
-        let event : Event = Event()
-        var roomName = "puste"
-        
+    switch response.result {
+       case .success(let value):
     
-        if let room = (item["roomName"] as? String)
-        {
-//        print("PJ roomName nil: \(item["roomName"]), \(item["startDate"])")
-          roomName = room
-        }
-        else
-        {
-//         print("PJ roomName jest: \(item["roomName"]), \(item["startDate"])")
-                     roomName = "sala nieznana"
-        }
+        var events: [[String:Any]]!
         
-        
-         
+        if let JSON = value as? [String: Any] {
+            events = JSON["results"] as? [[String:Any]]
 
-        let startDate = getDate(date: item["startDate"] as! String)
-        let endDate = getDate(date: item["endDate"] as! String)
-               
-               
-
-        let startHour = Calendar.current.component(.hour, from: startDate!)
-        let startMinute = Calendar.current.component(.minute, from: startDate!)
-
-        let endHour = Calendar.current.component(.hour, from: endDate!)
-        let endMinute = Calendar.current.component(.minute, from: endDate!)
-
-        var endMinuteString = ""
-        
-        if (endMinute > 0 && endMinute < 10) {
-            endMinuteString = "0\(endMinute)"
-        } else if (endMinute == 0){
-            endMinuteString = "00"
-        } else {
-            endMinuteString = "\(endMinute)"
         }
         
-        var startMinuteString = ""
+//        print("PJ value events[0] \(events[0])")
         
-        if (startMinute > 0 && startMinute < 10) {
-            startMinuteString = "0\(startMinute)"
-        } else if (startMinute == 0){
-            startMinuteString = "00"
-        } else {
-            startMinuteString = "\(startMinute)"
-        }
+//            guard let value = response.result.value as? [String: Any],
+//              guard let events = value["results"] as? [[String: Any]] else {
+//                print("Malformed data received from fetchAllRooms service")
+//                completion(eventList1, eventList2)
+//                return
+//            }
+
         
-        let times = "\(startHour):\(startMinuteString) - \(endHour):\(endMinuteString)"
+            events.forEach { (item) in
+                let event : Event = Event()
+                var roomName = "puste"
+                
+            
+                if let room = (item["roomName"] as? String)
+                {
+        //        print("PJ roomName nil: \(item["roomName"]), \(item["startDate"])")
+                  roomName = room
+                }
+                else
+                {
+        //         print("PJ roomName jest: \(item["roomName"]), \(item["startDate"])")
+                             roomName = "sala nieznana"
+                }
+                
+                
+                 
+
+                let startDate = getDate(date: item["startDate"] as! String)
+                let endDate = getDate(date: item["endDate"] as! String)
+                       
+                       
+
+                let startHour = Calendar.current.component(.hour, from: startDate!)
+                let startMinute = Calendar.current.component(.minute, from: startDate!)
+
+                let endHour = Calendar.current.component(.hour, from: endDate!)
+                let endMinute = Calendar.current.component(.minute, from: endDate!)
+
+                var endMinuteString = ""
+                
+                if (endMinute > 0 && endMinute < 10) {
+                    endMinuteString = "0\(endMinute)"
+                } else if (endMinute == 0){
+                    endMinuteString = "00"
+                } else {
+                    endMinuteString = "\(endMinute)"
+                }
+                
+                var startMinuteString = ""
+                
+                if (startMinute > 0 && startMinute < 10) {
+                    startMinuteString = "0\(startMinute)"
+                } else if (startMinute == 0){
+                    startMinuteString = "00"
+                } else {
+                    startMinuteString = "\(startMinute)"
+                }
+                
+                let times = "\(startHour):\(startMinuteString) - \(endHour):\(endMinuteString)"
+                
+                event.text = "\(item["name"] as! String) - \(item["instructorName"] as! String)\n\(roomName)\n\(times)"
+                
+                event.startDate = startDate!
+                event.endDate = endDate!
+                let color = (item["backgroundColor"] as! String).replacingOccurrences(of: "#", with: "#ff")
+                event.backgroundColor = UIColor(hex: color)!
+                if (roomName == "Mała Sala") {
+                    eventList1.append(event)
+                } else {
+                    eventList2.append(event)
+        //            print(event.text)
+                }
+            }
         
-        event.text = "\(item["name"] as! String) - \(item["instructorName"] as! String)\n\(roomName)\n\(times)"
         
-        event.startDate = startDate!
-        event.endDate = endDate!
-        let color = (item["backgroundColor"] as! String).replacingOccurrences(of: "#", with: "#ff")
-        event.backgroundColor = UIColor(hex: color)!
-        if (roomName == "Mała Sala") {
-            eventList1.append(event)
-        } else {
-            eventList2.append(event)
-//            print(event.text)
-        }
+            completion(eventList1, eventList2)
+        
+        
+       case .failure(let error):
+        print("Error while fetching remote rooms: \(error.localizedDescription)")
+         completion(eventList1, eventList2)
     }
-    completion(eventList1, eventList2)
+    
+//    guard response.result.isSuccess else {
+//
+//      return
+//    }
+
+
   }
+    
+    
+    
 }
 
   
@@ -149,44 +173,64 @@ func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
             
        
         
-            Alamofire.request(url, method: .get, headers: headers)
+            AF.request(url, method: .get, headers: headers)
               .validate()
               .responseJSON { response in
-                guard response.result.isSuccess else {
-                  print("Error while fetching remote rooms: \(response.result.error)")
-                    let error: Array<Membership> = [Membership(name: "-1: blad z serwera", expirationDate: Date(), isValid: false)]
-                 completion(error)
-                  return
+                
+                
+                switch response.result {
+                   case .success(let value):
+                
+                    var memberships: [[String:Any]]!
+                    
+                    
+                    if let JSON = value as? [String: Any] {
+                        memberships = JSON["results"] as? [[String:Any]]
+
+                    }
+                    
+                    if (memberships.count != 0) {
+                            memberships.forEach { (membership) in
+                                
+                              
+                                let expirationDate = getDate(date: membership["to"] as! String)
+    //                            print("PJ expDate: \(expirationDate) a z efitnessu jest: \(membership["to"])")
+                                var isValid = false
+                                if (membership["isValid"] as! Int != 0) {
+                                    isValid = true
+                                }
+                                
+                                let tempMembership = Membership(name: membership["name"] as! String, expirationDate: expirationDate!, isValid: isValid)
+                                membershipsArray.append(tempMembership)
+                                
+                            }
+                    } else {
+                        let error: Array<Membership> = [Membership(name: "-1: brak danych", expirationDate: Date(), isValid: false)]
+                        completion(error)
+                        return
+                    }
+                    
+                    
+                 
+                    completion(membershipsArray)
+                    
+                   case .failure(let error):
+                    let myError: Array<Membership> = [Membership(name: "-1: \(error.localizedDescription))", expirationDate: Date(), isValid: false)]
+                        completion(myError)
                 }
+                
+                
+//                guard response.result.isSuccess else {
+//                  print("Error while fetching remote rooms: \(response.result.error)")
+//
+//                  return
+//                }
 
                                 
-                guard let value = response.result.value as? [String: Any], let memberships = value["results"] as? [[String: Any]] else {
-                    let error: Array<Membership> = [Membership(name: "-1: blad odczytu danych", expirationDate: Date(), isValid: false)]
-                    completion(error)
-                    return
-                }
+
                 
                 
-                if (memberships.count != 0) {
-                        memberships.forEach { (membership) in
-                            
-                          
-                            let expirationDate = getDate(date: membership["to"] as! String)
-                            print("PJ expDate: \(expirationDate) a z efitnessu jest: \(membership["to"])")
-                            
-                            let tempMembership = Membership(name: membership["name"] as! String, expirationDate: expirationDate!, isValid: (membership["isValid"] != nil))
-                            membershipsArray.append(tempMembership)
-                            
-                        }
-                } else {
-                    let error: Array<Membership> = [Membership(name: "-1: brak danych", expirationDate: Date(), isValid: false)]
-                    completion(error)
-                    return
-                }
-                
-                
-             
-                completion(membershipsArray)
+
                 
                }
 
@@ -208,88 +252,122 @@ func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
         }
         
         
-        Alamofire.request(url,
-                          method: .get, headers: headers)
+        AF.request(url, method: .get, headers: headers)
           .validate()
           .responseJSON { response in
-            guard response.result.isSuccess else {
-              print("Error while fetching remote rooms: \(response.result.error)")
-              completion("-1: blad z serwera")
-              return
-            }
-
             
-//            print("PJ personal: \(response.result.value)")
             
-            guard let value = response.result.value as? [String: Any],
+            switch response.result {
+               case .success(let value):
             
-                let firstName = value["firstName"] as? String,
-                let lastName = value["lastName"] as? String
+                if let JSON = value as? [String: Any] {
+                    
+                    let firstName = JSON["firstName"] as! String
+                    let lastName = JSON["lastName"] as! String
+                    completion("\(firstName) \(lastName)")
+                } else {
+                    completion("-1: blad odczytu danych")
+                }
                 
-            
-            else {
-                print("Malformed data received from fetchAllRooms service")
-                completion("-1: blad odczytu danych")
-                return
+                
+                
+               case .failure(let error):
+                completion("-1: \(error.localizedDescription)")
             }
             
-         
-            completion("\(firstName) \(lastName)")
+        
             
            }
 
     }
     
     
-    func efitnessLogin(email: String, password: String, completion: @escaping (String, String) -> Void) {
+    func efitnessLogin(email: String, password: String, completion: @escaping (String, String, String) -> Void) {
         let headers: HTTPHeaders = [
               "api-access-token": eftinessToken,
               "Accept": "application/json",
               "Content-type": "application/json"
           ]
-          
 
-          
         guard let url = URL(string: "https://api-frontend2.efitness.com.pl/api/clubs/324/token/member") else {
-          completion("-1: zly adres api", "-1")
+          completion("-1: zly adres api", "-1", "-1")
           return
         }
         
         let params : Parameters = ["login" : email, "password" : password]
-
         
-        Alamofire.request(url,
-                          method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers)
+        AF.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers)
           .validate()
           .responseJSON { response in
-            guard response.result.isSuccess else {
-              print("Error while fetching remote rooms: \(response.result.error)")
-              completion("-1: blad z serwera", "-1")
-              return
-            }
-
             
-            guard let value = response.result.value as? [String: Any],
+            switch response.result {
+               case .success(let value):
+           
+                if let JSON = value as? [String: Any] {
+                    let accessToken = JSON["accessToken"] as! String
+                    let userID = JSON["id"] as! String
+                    let refreshToken = JSON["refreshToken"] as! String
+                    
+                    completion(accessToken, userID, refreshToken)
                 
-                let accessToken = value["accessToken"] as? String else {
-                print("Malformed data received from fetchAllRooms service")
-                completion("-1: blad odczytu danych", "-1" )
-                return
+                } else {
+                    completion("-1: blad odczytu danych", "-1", "-1")
+                }
+                
+               case .failure(let error):
+                
+                completion("-1: \(error.localizedDescription))", "-1", "-1")
+                
             }
-            
-            let userID = value["id"] as! String
-            
-            completion(accessToken, userID)
-            
+    
            }
+    }
 
+    
+    func refreshUserToken(accessToken: String, refreshToken: String, completion: @escaping (String, String, String) -> Void) {
+        let headers: HTTPHeaders = [
+              "api-access-token": eftinessToken,
+              "Accept": "application/json",
+              "Content-type": "application/json",
+               "member-token" : "bearer \(accessToken)"
+          ]
+
+        guard let url = URL(string: "https://api-frontend2.efitness.com.pl/api/clubs/324/token/member/refresh") else {
+          completion("-1: zly adres api", "-1", "-1")
+          return
+        }
+        
+        
+        let params : Parameters = ["refreshToken" : refreshToken]
+        
+        AF.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers)
+          .validate()
+          .responseJSON { response in
+            
+            switch response.result {
+               case .success(let value):
+           
+                if let JSON = value as? [String: Any] {
+                    let accessToken = JSON["accessToken"] as! String
+                    let userID = JSON["id"] as! String
+                    let refreshToken = JSON["refreshToken"] as! String
+                    
+                    
+                    completion(accessToken, userID, refreshToken)
+                
+                } else {
+                    completion("-1: blad odczytu danych", "-1", "-1")
+                }
+                
+               case .failure(let error):
+                
+                completion("-1: \(error.localizedDescription))", "-1", "-1")
+                
+            }
+    
+           }
     }
     
-    
-    
-    
-    
-
     
     
 }

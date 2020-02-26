@@ -18,8 +18,13 @@ var eventList2 : [Event] = []
 class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
 
+    @IBOutlet weak var tableView: UITableView!
+    
+    
     var login = ""
     var password = ""
+    
+    var recievedMemberships: Array<Membership>!
     
     //TODO - chowac klawiature gdy user kliknie przycisk zalogu j zmiast entera naklawiaturze
    
@@ -45,7 +50,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
             login = emailField.text ?? ""
             password = passwordField.text ?? ""
             
-            AlamofireManager.sharedInstance.efitnessLogin(email: login, password: password) { (accessToken, id) in
+            AlamofireManager.sharedInstance.efitnessLogin(email: login, password: password) { (accessToken, id, refreshToken) in
+                
                 
                 if (accessToken.starts(with: "-1")) {
                     let alertController = UIAlertController(title: NSLocalizedString("Incorrect email or password.", comment: ""), message:
@@ -57,9 +63,12 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                 } else {
                     
                     print("PJ  odczytany userID: \(id)")
+                    print("PJ refreshToken: \(refreshToken)")
+                    UserDefaults.standard.set(refreshToken, forKey: "refreshToken")
+                    UserDefaults.standard.set(accessToken, forKey: "accessToken")
                     
                     AlamofireManager.sharedInstance.getMemberships(token: accessToken) { (memberships) in
-                        print("PJ odpytany memberships i results: \(memberships)")
+//                        print("PJ odpytany memberships i results: \(memberships)")
                         
                         
                         if memberships[0].name.hasPrefix("-1") {
@@ -70,6 +79,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                                 print("PJ memb: \(x.name), \(x.expirationDate), \(x.isValid)")
                             }
                             
+                            self.recievedMemberships = memberships.sorted(by: {$0.expirationDate > $1.expirationDate})
+                            self.tableView.isHidden = false
+                            self.tableView.reloadData()
+
                         }
                         
                        
@@ -249,12 +262,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     var localCardNumber = ""
     var localUserName = ""
     var localLogin = ""
-    var test = [Membership(name: "VIP zniżka 100%", expirationDate: Date(timeIntervalSince1970: 1432578526), isValid: false)]//,
-//    Membership(name: "Open for my Love / umowa na 6 miesięcy (bezpłatna)", expirationDate: Date(timeIntervalSince1970: 1596133726), isValid: true),
-//    Membership(name: "VIP zniżka 100%", expirationDate: Date(timeIntervalSince1970: 1432578526), isValid: false),
-//    Membership(name: "Open for my Love / umowa na 6 miesięcy (bezpłatna)", expirationDate: Date(timeIntervalSince1970: 1596133726), isValid: true),
-//    Membership(name: "VIP zniżka 100%", expirationDate: Date(timeIntervalSince1970: 1432578526), isValid: false),
-//    Membership(name: "Open for my Love / umowa na 6 miesięcy (bezpłatna)", expirationDate: Date(timeIntervalSince1970: 1596133726), isValid: true)]
+    
+    var testSorted: Array<Membership>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -267,8 +276,13 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
             eventList2 = list2
         }
 
-//        tableView = UITableView()
-
+//        recievedMemberships = [Membership(name: "VIP zniżka 100% 1", expirationDate: Date(timeIntervalSince1970: 1432578526), isValid: true),
+//        Membership(name: "Open for my Love / umowa na 6 miesięcy (bezpłatna) 2", expirationDate: Date(timeIntervalSince1970: 1590133726), isValid: true),
+//        Membership(name: "VIP zniżka 100% 3", expirationDate: Date(timeIntervalSince1970: 1332578526), isValid: false),
+//        Membership(name: "Open for my Love / umowa na 6 miesięcy (bezpłatna) 4", expirationDate: Date(timeIntervalSince1970: 1597133726), isValid: false),
+//        Membership(name: "VIP zniżka 100% 5", expirationDate: Date(timeIntervalSince1970: 1332278526), isValid: false),
+//        Membership(name: "Open for my Love / umowa na 6 miesięcy (bezpłatna) 6", expirationDate: Date(timeIntervalSince1970: 1599133726), isValid: true)]
+        
         
         
     }
@@ -302,7 +316,37 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
 
         if checkWasLogged {
         
+            let refToken = defaults.string(forKey: "refreshToken") ?? ""
+            let accessToken = defaults.string(forKey: "accessToken") ?? ""
             
+            print("PJ !!!!    reftoken: \(refToken), access: \(accessToken)")
+            
+            AlamofireManager.sharedInstance.refreshUserToken(accessToken: accessToken, refreshToken: refToken) { (accessToken, id, refreshToken) in
+                print("PJ po refreshu: id = \(id) i reftoken = \(refreshToken),  acctoken = \(accessToken)")
+                
+                if !accessToken.hasPrefix("-1"){
+                    UserDefaults.standard.set(accessToken, forKey: "accessToken")
+                    UserDefaults.standard.set(refreshToken, forKey: "refreshToken")
+                    AlamofireManager.sharedInstance.getMemberships(token: accessToken) { (memberships) in
+                        
+                        if memberships[0].name.hasPrefix("-1") {
+                            print("PJ error odczytaywania membership: \(memberships[0].name)")
+                        } else {
+                            
+                            memberships.forEach { (x) in
+                                print("PJ memb: \(x.name), \(x.expirationDate), \(x.isValid)")
+                            }
+                            
+                            self.recievedMemberships = memberships.sorted(by: {$0.expirationDate > $1.expirationDate})
+                            self.tableView.isHidden = false
+                            self.tableView.reloadData()
+
+                        }
+                    }
+                    
+                }
+                
+            }
             
             
             hideLogin()
@@ -368,19 +412,32 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return test.count
+        if (recievedMemberships == nil){
+            
+            tableView.isHidden = true
+            return 0
+        } else {
+            tableView.isHidden = false
+            return recievedMemberships.count
+            
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MembershipTableViewCell", for: indexPath) as! MembershipTableViewCell
         
-        let col = [UIColor.red, UIColor.green, UIColor.yellow, UIColor.purple]
-//        cell.backgroundColor = col.randomElement()!
-        cell.statusDot.tintColor = col.randomElement()!
-        
-        cell.membershipLabel.text = test[indexPath.row].name
-        cell.expirationDate.text = test[indexPath.row].expirationDate.string(format: "yyyy-MM-dd")
-        
+        if recievedMemberships.count > 0 {
+    
+            if (recievedMemberships[indexPath.row].isValid == true) {
+                cell.statusDot.tintColor = .green
+            } else {
+                cell.statusDot.tintColor = .red
+            }
+            cell.membershipLabel.text = recievedMemberships[indexPath.row].name
+            cell.expirationDate.text = recievedMemberships[indexPath.row].expirationDate.string(format: "yyyy-MM-dd")
+
+        }
+
         return cell
     }
     
@@ -447,7 +504,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                 dateLabel.textColor = .white
                 dateLabel.widthAnchor.constraint(equalToConstant: 60).isActive = true
                 dateLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
-                dateLabel.text  = "Valid to"
+                dateLabel.text  = "Valid till"
                 dateLabel.font = UIFont(name: "Variable-Bold", size: 12)
                 dateLabel.textAlignment = .center
 
