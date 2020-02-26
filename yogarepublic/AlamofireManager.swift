@@ -129,7 +129,68 @@ func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
 }
 
   
-    
+    func getMemberships(token: String, completion: @escaping (Array<Membership>) -> Void) {
+        
+        var membershipsArray: Array<Membership> = []
+        
+            let headers: HTTPHeaders = [
+                  "api-access-token": eftinessToken,
+                  "Accept": "application/json",
+                  "member-token" : "bearer \(token)"
+              ]
+              
+
+              
+            guard let url = URL(string: "https://api-frontend2.efitness.com.pl/api/clubs/324/members/memberships") else {
+             let error: Array<Membership> = [Membership(name: "-1: zly adres IP", expirationDate: Date(), isValid: false)]
+              completion(error)
+              return
+            }
+            
+       
+        
+            Alamofire.request(url, method: .get, headers: headers)
+              .validate()
+              .responseJSON { response in
+                guard response.result.isSuccess else {
+                  print("Error while fetching remote rooms: \(response.result.error)")
+                    let error: Array<Membership> = [Membership(name: "-1: blad z serwera", expirationDate: Date(), isValid: false)]
+                 completion(error)
+                  return
+                }
+
+                                
+                guard let value = response.result.value as? [String: Any], let memberships = value["results"] as? [[String: Any]] else {
+                    let error: Array<Membership> = [Membership(name: "-1: blad odczytu danych", expirationDate: Date(), isValid: false)]
+                    completion(error)
+                    return
+                }
+                
+                
+                if (memberships.count != 0) {
+                        memberships.forEach { (membership) in
+                            
+                          
+                            let expirationDate = getDate(date: membership["to"] as! String)
+                            print("PJ expDate: \(expirationDate) a z efitnessu jest: \(membership["to"])")
+                            
+                            let tempMembership = Membership(name: membership["name"] as! String, expirationDate: expirationDate!, isValid: (membership["isValid"] != nil))
+                            membershipsArray.append(tempMembership)
+                            
+                        }
+                } else {
+                    let error: Array<Membership> = [Membership(name: "-1: brak danych", expirationDate: Date(), isValid: false)]
+                    completion(error)
+                    return
+                }
+                
+                
+             
+                completion(membershipsArray)
+                
+               }
+
+        }
     
     
     func getMemberInfo(token: String, completion: @escaping (String) -> Void) {

@@ -15,13 +15,14 @@ import ZXingObjC
 
 var eventList1 : [Event] = []
 var eventList2 : [Event] = []
-class ViewController: UIViewController, UITextFieldDelegate {
+class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+    
 
     var login = ""
     var password = ""
     
     //TODO - chowac klawiature gdy user kliknie przycisk zalogu j zmiast entera naklawiaturze
-    //TODO - dodac link do resetowania hasła
+   
     
     @IBAction func button(_ sender: Any) {
         
@@ -56,6 +57,24 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 } else {
                     
                     print("PJ  odczytany userID: \(id)")
+                    
+                    AlamofireManager.sharedInstance.getMemberships(token: accessToken) { (memberships) in
+                        print("PJ odpytany memberships i results: \(memberships)")
+                        
+                        
+                        if memberships[0].name.hasPrefix("-1") {
+                            print("PJ error odczytaywania membership: \(memberships[0].name)")
+                        } else {
+                            
+                            memberships.forEach { (x) in
+                                print("PJ memb: \(x.name), \(x.expirationDate), \(x.isValid)")
+                            }
+                            
+                        }
+                        
+                       
+                        
+                    }
                     
                     AlamofireManager.sharedInstance.getMemberInfo(token: accessToken) { (userName) in
                         
@@ -230,6 +249,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var localCardNumber = ""
     var localUserName = ""
     var localLogin = ""
+    var test = [Membership(name: "VIP zniżka 100%", expirationDate: Date(timeIntervalSince1970: 1432578526), isValid: false)]//,
+//    Membership(name: "Open for my Love / umowa na 6 miesięcy (bezpłatna)", expirationDate: Date(timeIntervalSince1970: 1596133726), isValid: true),
+//    Membership(name: "VIP zniżka 100%", expirationDate: Date(timeIntervalSince1970: 1432578526), isValid: false),
+//    Membership(name: "Open for my Love / umowa na 6 miesięcy (bezpłatna)", expirationDate: Date(timeIntervalSince1970: 1596133726), isValid: true),
+//    Membership(name: "VIP zniżka 100%", expirationDate: Date(timeIntervalSince1970: 1432578526), isValid: false),
+//    Membership(name: "Open for my Love / umowa na 6 miesięcy (bezpłatna)", expirationDate: Date(timeIntervalSince1970: 1596133726), isValid: true)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -242,7 +267,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
             eventList2 = list2
         }
 
-   
+//        tableView = UITableView()
+
+        
         
     }
     
@@ -337,12 +364,125 @@ class ViewController: UIViewController, UITextFieldDelegate {
             
             
         }
-        
-        
-        
-              
-
     }
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return test.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MembershipTableViewCell", for: indexPath) as! MembershipTableViewCell
+        
+        let col = [UIColor.red, UIColor.green, UIColor.yellow, UIColor.purple]
+//        cell.backgroundColor = col.randomElement()!
+        cell.statusDot.tintColor = col.randomElement()!
+        
+        cell.membershipLabel.text = test[indexPath.row].name
+        cell.expirationDate.text = test[indexPath.row].expirationDate.string(format: "yyyy-MM-dd")
+        
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "asdfghjkl"
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+
+//        let headerView = UIView() //.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 40))
+//        let headerCell = tableView.dequeueReusableCell(withIdentifier: "MembershipTableViewCell") as! MembershipTableViewCell
+//        headerCell.membershipLabel.text = "Membership"
+//        headerCell.expirationDate.text = "Valid till"
+//        headerCell.statusDot.image = nil
+//        headerCell.backgroundColor = .green
+//        headerView.addSubview(headerCell)
+//        return headerView
+
+        
+        let headerView = UIView.init(frame: CGRect.init(x: 8, y: 0, width: tableView.frame.width - 8, height: 30))
+       headerView.backgroundColor = UIColor.lightGray
+        
+        
+        
+//       let sectionLabel = UILabel(frame: CGRect(x: 8, y: 8, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+//       sectionLabel.font = UIFont(name: "Variable-Bold", size: 12)
+//       sectionLabel.textColor = UIColor.white
+//       sectionLabel.text = "Memberships"
+//        sectionLabel.textAlignment = .center
+//       sectionLabel.sizeToFit()
+        
+        
+        //Image View
+        let imageView = UIImageView()
+//        imageView.backgroundColor = UIColor.
+        imageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+//        imageView.anchorToEdge(.right, padding: 0.0, width: 30, height: 30)
+        
+//        imageView.anchorAndFillEdge(.right, xPad: 0.0, yPad: 0.0, otherSize: 0.0)
+//        imageView.image = UIImage(named: "circle.fill")
+
+        //Text Label
+        let textLabel = UILabel()
+//        textLabel.backgroundColor = UIColor.yellow
+        textLabel.textColor = .white
+//        textLabel.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
+        
+        textLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        textLabel.text  = "Memberships"
+        textLabel.font = UIFont(name: "Variable-Bold", size: 12)
+        textLabel.textAlignment = .left
+        
+         let dateLabel = UILabel()
+        //        textLabel.backgroundColor = UIColor.yellow
+                dateLabel.textColor = .white
+                dateLabel.widthAnchor.constraint(equalToConstant: 60).isActive = true
+                dateLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+                dateLabel.text  = "Valid to"
+                dateLabel.font = UIFont(name: "Variable-Bold", size: 12)
+                dateLabel.textAlignment = .center
+
+        //Stack View
+       
+        
+        let stackView   = UIStackView()
+       stackView.axis  = NSLayoutConstraint.Axis.horizontal
+        stackView.distribution  = UIStackView.Distribution.fill
+//       stackView.alignment = UIStackView.Alignment.center
+       stackView.spacing   = 16.0
+        
+        stackView.addArrangedSubview(textLabel)
+        stackView.addArrangedSubview(dateLabel)
+        stackView.addArrangedSubview(imageView)
+//        imageView.rightAnchor.constraint(equalTo: stackView.rightAnchor, constant: 0).isActive = true
+//        imageView.anchorToEdge(.right, padding: 0, width: 30, height: 30)
+        textLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 8).isActive = true
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        self.view.addSubview(stackView)
+
+        //Constraints
+//        stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+//        stackView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+//        stackView.anchorToEdge(.right, padding: 0, width: headerView.width, height: headerView.height)
+        stackView.widthAnchor.constraint(equalToConstant: tableView.bounds.size.width).isActive = true
+        
+        
+        
+       headerView.addSubview(stackView)// sectionLabel)
+        return headerView
+    }
+    
 
     func showHUD(){
         progressIndicator.startAnimating()
@@ -376,7 +516,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
 public func getDate(date: String) -> Date? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-    dateFormatter.timeZone = TimeZone.current
+    dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
     dateFormatter.locale = Locale.current
     return dateFormatter.date(from: date)
 }

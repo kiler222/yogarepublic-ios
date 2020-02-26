@@ -112,6 +112,68 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ai8-Zm-lbt">
+                                <rect key="frame" x="48" y="387" width="279" height="173.5"/>
+                                <color key="sectionIndexColor" red="0.79607843140000001" green="0.26274509800000001" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="rCl-JA-JzS">
+                                    <rect key="frame" x="0.0" y="100" width="279" height="0.0"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MembershipTableViewCell" id="GCR-8g-zEm" customClass="MembershipTableViewCell" customModule="Yoga_Republic" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="279" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GCR-8g-zEm" id="t3u-wU-HMd">
+                                            <rect key="frame" x="0.0" y="0.0" width="279" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HqV-qa-m94">
+                                                    <rect key="frame" x="8" y="0.0" width="271" height="44"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Membership name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ful-vb-KyN" userLabel="Membership">
+                                                            <rect key="frame" x="0.0" y="0.0" width="167" height="44"/>
+                                                            <fontDescription key="fontDescription" name="Variable-Bold" family="Variable" pointSize="10"/>
+                                                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cWw-b3-Err" userLabel="Date">
+                                                            <rect key="frame" x="167" y="0.0" width="60" height="44"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="60" id="y1x-QO-D4Q"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="Variable-Bold" family="Variable" pointSize="10"/>
+                                                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="l9i-Pt-eYL">
+                                                            <rect key="frame" x="227" y="2.5" width="44" height="39.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="l9i-Pt-eYL" secondAttribute="height" id="Ht0-XG-pGJ"/>
+                                                            </constraints>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="HqV-qa-m94" secondAttribute="bottom" id="75y-E4-Wr4"/>
+                                                <constraint firstItem="HqV-qa-m94" firstAttribute="leading" secondItem="t3u-wU-HMd" secondAttribute="leading" constant="8" id="TGZ-wg-Zt2"/>
+                                                <constraint firstItem="HqV-qa-m94" firstAttribute="top" secondItem="t3u-wU-HMd" secondAttribute="top" id="k5f-Rl-wyx"/>
+                                                <constraint firstAttribute="trailing" secondItem="HqV-qa-m94" secondAttribute="trailing" id="mK4-Vv-6p7"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="expirationDate" destination="cWw-b3-Err" id="lFM-sA-zzx"/>
+                                            <outlet property="membershipLabel" destination="ful-vb-KyN" id="olV-5w-21x"/>
+                                            <outlet property="statusDot" destination="l9i-Pt-eYL" id="qwB-OK-VXc"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="0bQ-ke-0m6"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Q5f-VE-JCN"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -128,16 +190,20 @@
                             <constraint firstItem="2TP-Gx-zev" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Q7x-eM-FZr"/>
                             <constraint firstItem="DaI-UW-Baq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="QAy-jd-8gd"/>
                             <constraint firstItem="1Po-q0-qW4" firstAttribute="leading" secondItem="IDL-X7-5N6" secondAttribute="leading" id="Qie-eZ-ROR"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ai8-Zm-lbt" secondAttribute="trailing" constant="48" id="VzD-So-kGF"/>
                             <constraint firstItem="1Po-q0-qW4" firstAttribute="top" secondItem="IDL-X7-5N6" secondAttribute="bottom" id="Wcd-9C-K2V"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2TP-Gx-zev" secondAttribute="trailing" id="Zoa-Yx-OTe"/>
                             <constraint firstItem="8ce-k7-7bX" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="au0-pZ-QEx"/>
                             <constraint firstItem="0Yj-Ay-LQS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="bUf-IR-yX0"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="NK9-5H-Urp" secondAttribute="bottom" constant="25" id="e1B-6X-k2O"/>
                             <constraint firstItem="a7T-7d-Qqw" firstAttribute="top" secondItem="ltB-B2-xqQ" secondAttribute="bottom" constant="8" id="evP-Av-qix"/>
+                            <constraint firstItem="NK9-5H-Urp" firstAttribute="top" secondItem="ai8-Zm-lbt" secondAttribute="bottom" constant="8" id="fIr-tE-stw"/>
                             <constraint firstItem="1Po-q0-qW4" firstAttribute="trailing" secondItem="IDL-X7-5N6" secondAttribute="trailing" id="g7q-jR-KNX"/>
                             <constraint firstItem="ltB-B2-xqQ" firstAttribute="top" secondItem="2TP-Gx-zev" secondAttribute="bottom" constant="32" id="gAY-L7-oWX"/>
+                            <constraint firstItem="ai8-Zm-lbt" firstAttribute="top" secondItem="8ce-k7-7bX" secondAttribute="bottom" constant="4" id="gIe-cU-5LM"/>
                             <constraint firstItem="8ce-k7-7bX" firstAttribute="top" secondItem="1Po-q0-qW4" secondAttribute="bottom" constant="8" id="iTv-4X-4Vg"/>
                             <constraint firstItem="rTl-tC-hJv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="iit-ct-EVq"/>
+                            <constraint firstItem="ai8-Zm-lbt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="48" id="jWk-bq-TFT"/>
                             <constraint firstItem="IDL-X7-5N6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="lzc-9i-EZN"/>
                             <constraint firstItem="AuM-ge-VBB" firstAttribute="top" secondItem="a7T-7d-Qqw" secondAttribute="bottom" id="nzG-aH-jkU"/>
                             <constraint firstItem="a7T-7d-Qqw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pxi-Mb-hWN"/>
@@ -164,7 +230,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1957.9710144927537" y="63.616071428571423"/>
+            <point key="canvasLocation" x="1957.5999999999999" y="63.418290854572717"/>
         </scene>
         <!--Timetable-->
         <scene sceneID="4ea-va-hgt">
@@ -263,6 +329,7 @@
     <resources>
         <image name="bigRoom" width="250" height="187.5"/>
         <image name="calendar" catalog="system" width="64" height="52"/>
+        <image name="circle.fill" catalog="system" width="64" height="60"/>
         <image name="person" catalog="system" width="64" height="58"/>
         <image name="smallRoom" width="250" height="187.5"/>
         <image name="yrbackground" width="450" height="750"/>

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		C38481B35E40F90513B77C3D /* Pods_yogarepublic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C91DC5166EABB17E063B211 /* Pods_yogarepublic.framework */; };
 		E501188023F420070041A629 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E501188223F420070041A629 /* Localizable.strings */; };
+		E526AEC62404577600EBCD6A /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E526AEC52404577600EBCD6A /* Model.swift */; };
+		E526AEC824056C4400EBCD6A /* MembershipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E526AEC724056C4300EBCD6A /* MembershipTableViewCell.swift */; };
 		E55EBC8C23F0CD0400699BCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55EBC8B23F0CD0400699BCE /* AppDelegate.swift */; };
 		E55EBC8E23F0CD0400699BCE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55EBC8D23F0CD0400699BCE /* SceneDelegate.swift */; };
 		E55EBC9023F0CD0400699BCE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55EBC8F23F0CD0400699BCE /* ViewController.swift */; };
@@ -33,6 +35,8 @@
 		E501188323F420120041A629 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E501188523F420260041A629 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		E501188623F43BEC0041A629 /* Yoga Republic.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Yoga Republic.entitlements"; sourceTree = "<group>"; };
+		E526AEC52404577600EBCD6A /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		E526AEC724056C4300EBCD6A /* MembershipTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipTableViewCell.swift; sourceTree = "<group>"; };
 		E55EBC8823F0CD0400699BCE /* Yoga Republic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yoga Republic.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55EBC8B23F0CD0400699BCE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E55EBC8D23F0CD0400699BCE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,11 +109,13 @@
 				E55EBCAD23F3F86700699BCE /* Variable_bold.otf */,
 				E55EBCAB23F2C9D700699BCE /* GoogleService-Info.plist */,
 				E55EBC8B23F0CD0400699BCE /* AppDelegate.swift */,
+				E526AEC724056C4300EBCD6A /* MembershipTableViewCell.swift */,
 				E55EBCA923F2C51600699BCE /* FirebaseManager.swift */,
 				E55EBCA523F1A2F600699BCE /* TabBarController.swift */,
 				E55EBCA123F15E4600699BCE /* AlamofireManager.swift */,
 				E55EBC8D23F0CD0400699BCE /* SceneDelegate.swift */,
 				E55EBCA323F1780D00699BCE /* TimetableViewController.swift */,
+				E526AEC52404577600EBCD6A /* Model.swift */,
 				E55EBC8F23F0CD0400699BCE /* ViewController.swift */,
 				E55EBC9123F0CD0400699BCE /* Main.storyboard */,
 				E55EBC9423F0CD0C00699BCE /* Assets.xcassets */,
@@ -240,12 +246,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E526AEC62404577600EBCD6A /* Model.swift in Sources */,
 				E55EBCA223F15E4600699BCE /* AlamofireManager.swift in Sources */,
 				E55EBC9023F0CD0400699BCE /* ViewController.swift in Sources */,
 				E55EBCA423F1780D00699BCE /* TimetableViewController.swift in Sources */,
 				E55EBCA623F1A2F700699BCE /* TabBarController.swift in Sources */,
 				E55EBCAA23F2C51600699BCE /* FirebaseManager.swift in Sources */,
 				E55EBCA823F1A48300699BCE /* TimeViewController.swift in Sources */,
+				E526AEC824056C4400EBCD6A /* MembershipTableViewCell.swift in Sources */,
 				E55EBC8C23F0CD0400699BCE /* AppDelegate.swift in Sources */,
 				E55EBC8E23F0CD0400699BCE /* SceneDelegate.swift in Sources */,
 			);
