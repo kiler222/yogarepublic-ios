@@ -121,7 +121,7 @@ func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
                 
                 event.startDate = startDate!
                 event.endDate = endDate!
-                let color = (item["backgroundColor"] as! String).replacingOccurrences(of: "#", with: "#ff")
+                let color = (item["backgroundColor"] as! String) + "aa"// .replacingOccurrences(of: "#", with: "#ff")
                 event.backgroundColor = UIColor(hex: color)!
                 if (roomName == "Mała Sala") {
                     eventList1.append(event)
@@ -360,7 +360,7 @@ func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
                 }
                 
                case .failure(let error):
-                
+                print("PJ failure refTokne: \(error) oraz \(error.localizedDescription)")
                 completion("-1: \(error.localizedDescription))", "-1", "-1")
                 
             }

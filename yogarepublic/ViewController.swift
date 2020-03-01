@@ -67,26 +67,19 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                     UserDefaults.standard.set(refreshToken, forKey: "refreshToken")
                     UserDefaults.standard.set(accessToken, forKey: "accessToken")
                     
+                    
                     AlamofireManager.sharedInstance.getMemberships(token: accessToken) { (memberships) in
-//                        print("PJ odpytany memberships i results: \(memberships)")
-                        
-                        
+
                         if memberships[0].name.hasPrefix("-1") {
                             print("PJ error odczytaywania membership: \(memberships[0].name)")
                         } else {
-                            
-                            memberships.forEach { (x) in
-                                print("PJ memb: \(x.name), \(x.expirationDate), \(x.isValid)")
-                            }
-                            
+           
                             self.recievedMemberships = memberships.sorted(by: {$0.expirationDate > $1.expirationDate})
                             self.tableView.isHidden = false
                             self.tableView.reloadData()
 
                         }
-                        
                        
-                        
                     }
                     
                     AlamofireManager.sharedInstance.getMemberInfo(token: accessToken) { (userName) in
@@ -100,10 +93,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                             self.hideHUD()
                         } else {
                             
-//                            print("PJ tutajjjjj")
+
                             Auth.auth().signInAnonymously() { (authResult, error) in
-                              // ...
-//                                print("PJ error: \(error)")
+
                                 if (error == nil){
                                     
                                     self.localLogin = self.login
@@ -115,12 +107,22 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                                             
                                             FirebaseManager.sharedInstance.getCardNumber(login: id) { (cardNumber) in
                                                 
-                                                self.localCardNumber = cardNumber
-                                                self.cardNumber.text = cardNumber
-                                                self.cardNumber.isHidden = false
+                                                
+                                               
                                                 let writer = ZXMultiFormatWriter()
+                                                
+                                                var verifiedCardNumber = ""
+
+                                                if (cardNumber == "-1") {
+                                                    verifiedCardNumber = "0000"
+                                                    
+                                                } else {
+                                                    verifiedCardNumber = cardNumber
+                                                }
+                                                
                                                 do {
-                                                    let result = try writer.encode(cardNumber, format: kBarcodeFormatITF, width: 240, height: 100)
+                                        
+                                                    let result = try writer.encode(verifiedCardNumber, format: kBarcodeFormatITF, width: 240, height: 100)
                                                     let zx = ZXImage(matrix: result)
                                                     let cg = zx?.cgimage
                                                     let img = UIImage(cgImage: cg!)
@@ -129,14 +131,21 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                                                 } catch {
                                                     print("PJ \(error)")
                                                 }
+                                                
+                                                
+                                                
                                                 self.logoutButton.isHidden = false
                                                 self.userNameField.text = userName
                                                 self.hideHUD()
                                                 self.wasLogged = true
+                                                self.localCardNumber = verifiedCardNumber
+                                                self.cardNumber.text = verifiedCardNumber
+                                                self.cardNumber.isHidden = false
                                                 UserDefaults.standard.set(true, forKey: "wasLogged")
                                                 UserDefaults.standard.set(userName, forKey: "userName")
-                                                UserDefaults.standard.set(cardNumber, forKey: "cardNumber")
+                                                UserDefaults.standard.set(verifiedCardNumber, forKey: "cardNumber")
                                                 UserDefaults.standard.set(self.login, forKey: "login")
+                                                UserDefaults.standard.set(self.password, forKey: "password")
                                                 
                                             }
                                             
@@ -149,6 +158,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                                             UserDefaults.standard.set(true, forKey: "wasLogged")
                                             UserDefaults.standard.set(userName, forKey: "userName")
                                             UserDefaults.standard.set(self.login, forKey: "login")
+                                            UserDefaults.standard.set(self.password, forKey: "password")
                                             
                                         }
                                         
@@ -173,7 +183,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                         
                         
                     }
-                    
                     
                 }
                 
@@ -221,6 +230,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
             self.wasLogged = false
             UserDefaults.standard.set(false, forKey: "wasLogged")
             UserDefaults.standard.set("", forKey: "login")
+            UserDefaults.standard.set("", forKey: "password")
             UserDefaults.standard.set("", forKey: "userName")
             UserDefaults.standard.set("", forKey: "cardNumber")
             UserDefaults.standard.set("", forKey: "accessToken")
@@ -320,39 +330,66 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
 
         if checkWasLogged {
         
-            let refToken = defaults.string(forKey: "refreshToken") ?? ""
-            let accessToken = defaults.string(forKey: "accessToken") ?? ""
+            showHUD()
             
-//            print("PJ !!!!    reftoken: \(refToken), access: \(accessToken)")
-             showHUD()
-            AlamofireManager.sharedInstance.refreshUserToken(accessToken: accessToken, refreshToken: refToken) {
-                (accessToken, id, refreshToken) in
-                self.hideHUD()
-                print("PJ po refreshu: id = \(id) i reftoken = \(refreshToken),  acctoken = \(accessToken)")
+//            let refToken = defaults.string(forKey: "refreshToken") ?? ""
+//            let accessToken = defaults.string(forKey: "accessToken") ?? ""
+            let password = defaults.string(forKey: "password") ?? ""
+            let emailLogin = defaults.string(forKey: "login") ?? ""
+            
+//            print("PJ !!!! password: \(password), login: \(emailLogin)")
+            
+            AlamofireManager.sharedInstance.efitnessLogin(email: emailLogin, password: password) { (accToken, userId, refToken) in
                 
-                if !accessToken.hasPrefix("-1"){
-                    UserDefaults.standard.set(accessToken, forKey: "accessToken")
-                    UserDefaults.standard.set(refreshToken, forKey: "refreshToken")
-                    AlamofireManager.sharedInstance.getMemberships(token: accessToken) { (memberships) in
-                        
+//                print("PJ accTOken w login: \(accToken)")
+                
+                if !accToken.hasPrefix("-1"){
+            
+                    
+                    UserDefaults.standard.set(accToken, forKey: "accessToken")
+                    UserDefaults.standard.set(refToken, forKey: "refreshToken")
+                    AlamofireManager.sharedInstance.getMemberships(token: accToken) { (memberships) in
+                        self.hideHUD()
                         if memberships[0].name.hasPrefix("-1") {
-                            print("PJ error odczytaywania membership: \(memberships[0].name)")
+                            print("PJ XXX error odczytaywania membership: \(memberships[0].name)")
                         } else {
-                            
-//                            memberships.forEach { (x) in
-//                                print("PJ memb: \(x.name), \(x.expirationDate), \(x.isValid)")
-//                            }
                             
                             self.recievedMemberships = memberships.sorted(by: {$0.expirationDate > $1.expirationDate})
                             self.tableView.isHidden = false
                             self.tableView.reloadData()
-
                         }
                     }
                     
+                } else {
+                    self.hideHUD()
                 }
-                
             }
+            
+            
+//            AlamofireManager.sharedInstance.refreshUserToken(accessToken: accessToken, refreshToken: refToken) {
+//                (accessToken, id, refreshToken) in
+//                self.hideHUD()
+//                print("PJ po refreshu: id = \(id) i reftoken = \(refreshToken),  acctoken = \(accessToken)")
+//
+//                if !accessToken.hasPrefix("-1"){
+//                    UserDefaults.standard.set(accessToken, forKey: "accessToken")
+//                    UserDefaults.standard.set(refreshToken, forKey: "refreshToken")
+//                    AlamofireManager.sharedInstance.getMemberships(token: accessToken) { (memberships) in
+//
+//                        if memberships[0].name.hasPrefix("-1") {
+//                            print("PJ error odczytaywania membership: \(memberships[0].name)")
+//                        } else {
+//
+//                            self.recievedMemberships = memberships.sorted(by: {$0.expirationDate > $1.expirationDate})
+//                            self.tableView.isHidden = false
+//                            self.tableView.reloadData()
+//
+//                        }
+//                    }
+//
+//                }
+//
+//            }
             
             
             hideLogin()
@@ -374,20 +411,26 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                                
                     if exist {
                         FirebaseManager.sharedInstance.getCardNumber(login: self.localLogin) { (cNumber) in
-                            UserDefaults.standard.set(cNumber, forKey: "cardNumber")
-                            self.cardNumber.text = cNumber
-                            self.cardNumber.isHidden = false
-                           let writer = ZXMultiFormatWriter()
-                           do {
-                               let result = try writer.encode(cNumber, format: kBarcodeFormatITF, width: 240, height: 100)
-                               let zx = ZXImage(matrix: result)
-                               let cg = zx?.cgimage
-                               let img = UIImage(cgImage: cg!)
-                               self.barcodeImage.image = img
-                               self.barcodeImage.isHidden = false
-                           } catch {
-                               print("PJ \(error)")
-                           }
+                         
+                            if (cNumber != "-1") {
+                                
+                                UserDefaults.standard.set(cNumber, forKey: "cardNumber")
+                                self.cardNumber.text = cNumber
+                                self.cardNumber.isHidden = false
+                               let writer = ZXMultiFormatWriter()
+                               do {
+                                   let result = try writer.encode(cNumber, format: kBarcodeFormatITF, width: 240, height: 100)
+                                   let zx = ZXImage(matrix: result)
+                                   let cg = zx?.cgimage
+                                   let img = UIImage(cgImage: cg!)
+                                   self.barcodeImage.image = img
+                                   self.barcodeImage.isHidden = false
+                               } catch {
+                                   print("PJ \(error)")
+                               }
+                            }
+                            
+                            
                             
                         }
                     }
@@ -462,29 +505,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 
-//        let headerView = UIView() //.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 40))
-//        let headerCell = tableView.dequeueReusableCell(withIdentifier: "MembershipTableViewCell") as! MembershipTableViewCell
-//        headerCell.membershipLabel.text = "Membership"
-//        headerCell.expirationDate.text = "Valid till"
-//        headerCell.statusDot.image = nil
-//        headerCell.backgroundColor = .green
-//        headerView.addSubview(headerCell)
-//        return headerView
-
-        
         let headerView = UIView.init(frame: CGRect.init(x: 8, y: 0, width: tableView.frame.width - 8, height: 30))
        headerView.backgroundColor = UIColor.lightGray //init(hex: "9EA09CFF")
-        
-        
-        
-//       let sectionLabel = UILabel(frame: CGRect(x: 8, y: 8, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
-//       sectionLabel.font = UIFont(name: "Variable-Bold", size: 12)
-//       sectionLabel.textColor = UIColor.white
-//       sectionLabel.text = "Memberships"
-//        sectionLabel.textAlignment = .center
-//       sectionLabel.sizeToFit()
-        
-        
+
         //Image View
         let imageView = UIImageView()
 //        imageView.backgroundColor = UIColor.

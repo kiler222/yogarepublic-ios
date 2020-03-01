@@ -23,7 +23,7 @@ class FirebaseManager: NSObject {
         db.collection("users").document(login).getDocument { (document, error) in
             if let document = document, document.exists {
                 let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-                print("PJ Document data: \(dataDescription)")
+                print("PJ getCardNumber data: \(dataDescription)")
                 let cardNumber = document.data()!["a"] as! String
                 completion(cardNumber)
             } else {
@@ -49,9 +49,7 @@ class FirebaseManager: NSObject {
     
     func updateLastLogin(login: String){
         db = Firestore.firestore()
-        db.collection("users").document(login).updateData([
-            "ll": Timestamp()
-        ]) { err in
+        db.collection("users").document(login).updateData(["ll": Timestamp()]) { err in
             if let err = err {
                 print("PJ Error updating lastlogin document: \(err)")
             } else {
