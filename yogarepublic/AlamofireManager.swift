@@ -189,18 +189,30 @@ func fetchAllRooms(completion: @escaping (Array<Event>, Array<Event>) -> Void) {
 
                     }
                     
+                    
+                    
+//                    memberships.forEach { (memb) in
+////                        print("PJ \(memb)")
+////                        print("PJ name: \(memb["name"]), isvalid: \(memb["isValid"]), from: \(memb["from"]) - to: \(memb["to"])")
+//                    }
+                    
+                    
                     if (memberships.count != 0) {
                             memberships.forEach { (membership) in
                                 
-                              
-                                let expirationDate = getDate(date: membership["to"] as! String)
-    //                            print("PJ expDate: \(expirationDate) a z efitnessu jest: \(membership["to"])")
+                                var expirationDate = Date(timeIntervalSince1970: 2556143999) //31.12.2050 23:59:59
+                                
+                                
+                                if let xxx = membership["to"] as? String {
+                                    expirationDate = getDate(date: xxx)! //getDate(date: membership["to"] as! String)!
+                                }
+    
                                 var isValid = false
                                 if (membership["isValid"] as! Int != 0) {
                                     isValid = true
                                 }
                                 
-                                let tempMembership = Membership(name: membership["name"] as! String, expirationDate: expirationDate!, isValid: isValid)
+                                let tempMembership = Membership(name: membership["name"] as! String, expirationDate: expirationDate, isValid: isValid)
                                 membershipsArray.append(tempMembership)
                                 
                             }

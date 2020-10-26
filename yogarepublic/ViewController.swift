@@ -31,6 +31,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     
     @IBAction func button(_ sender: Any) {
         
+      
+        
         hideLogin()
         showHUD()
         
@@ -68,19 +70,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                     UserDefaults.standard.set(accessToken, forKey: "accessToken")
                     
                     
-                    AlamofireManager.sharedInstance.getMemberships(token: accessToken) { (memberships) in
 
-                        if memberships[0].name.hasPrefix("-1") {
-                            print("PJ error odczytaywania membership: \(memberships[0].name)")
-                        } else {
-           
-                            self.recievedMemberships = memberships.sorted(by: {$0.expirationDate > $1.expirationDate})
-                            self.tableView.isHidden = false
-                            self.tableView.reloadData()
-
-                        }
-                       
-                    }
                     
                     AlamofireManager.sharedInstance.getMemberInfo(token: accessToken) { (userName) in
                         
@@ -105,6 +95,20 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                                             
                                             FirebaseManager.sharedInstance.updateLastLogin(login: id)
                                             
+                                             AlamofireManager.sharedInstance.getMemberships(token: accessToken) { (memberships) in
+
+                                                 if memberships[0].name.hasPrefix("-1") {
+                                                     print("PJ error odczytaywania membership: \(memberships[0].name)")
+                                                 } else {
+                                    
+                                                     self.recievedMemberships = memberships.sorted(by: {$0.expirationDate > $1.expirationDate})
+                                                     self.tableView.isHidden = false
+                                                     self.tableView.reloadData()
+
+                                                 }
+                                                
+                                             }
+                                            
                                             FirebaseManager.sharedInstance.getCardNumber(login: id) { (cardNumber) in
                                                 
                                                 
@@ -122,7 +126,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                                                 
                                                 do {
                                         
-                                                    let result = try writer.encode(verifiedCardNumber, format: kBarcodeFormatITF, width: 240, height: 100)
+                                                    let result = try writer.encode(verifiedCardNumber, format: kBarcodeFormatITF, width: 260, height: 100)
                                                     let zx = ZXImage(matrix: result)
                                                     let cg = zx?.cgimage
                                                     let img = UIImage(cgImage: cg!)
@@ -141,6 +145,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                                                 self.localCardNumber = verifiedCardNumber
                                                 self.cardNumber.text = verifiedCardNumber
                                                 self.cardNumber.isHidden = false
+                                                
                                                 UserDefaults.standard.set(true, forKey: "wasLogged")
                                                 UserDefaults.standard.set(userName, forKey: "userName")
                                                 UserDefaults.standard.set(verifiedCardNumber, forKey: "cardNumber")
@@ -419,7 +424,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                                 self.cardNumber.isHidden = false
                                let writer = ZXMultiFormatWriter()
                                do {
-                                   let result = try writer.encode(cNumber, format: kBarcodeFormatITF, width: 240, height: 100)
+                                   let result = try writer.encode(cNumber, format: kBarcodeFormatITF, width: 260, height: 100)
                                    let zx = ZXImage(matrix: result)
                                    let cg = zx?.cgimage
                                    let img = UIImage(cgImage: cg!)
@@ -442,7 +447,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                 cardNumber.isHidden = false
                 let writer = ZXMultiFormatWriter()
                 do {
-                    let result = try writer.encode(localCardNumber, format: kBarcodeFormatITF, width: 240, height: 100)
+                    let result = try writer.encode(localCardNumber, format: kBarcodeFormatITF, width: 260, height: 100)
                     let zx = ZXImage(matrix: result)
                     let cg = zx?.cgimage
                     let img = UIImage(cgImage: cg!)
@@ -484,7 +489,16 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                 cell.statusDot.tintColor = UIColor(displayP3Red: 255.0/255.0, green: 51.0/255.0, blue: 0.0/255.0, alpha: 1.0)
             }
             cell.membershipLabel.text = recievedMemberships[indexPath.row].name
-            cell.expirationDate.text = recievedMemberships[indexPath.row].expirationDate.string(format: "dd-MM-yyyy")
+            
+            let expDate = recievedMemberships[indexPath.row].expirationDate.string(format: "dd-MM-yyyy")
+            
+            if (expDate == "01-01-2051") {
+                cell.expirationDate.text = NSLocalizedString("permanent", comment: "")
+            } else {
+                cell.expirationDate.text = expDate
+            }
+            
+            
 
         }
 
@@ -553,7 +567,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
 //        imageView.rightAnchor.constraint(equalTo: stackView.rightAnchor, constant: 0).isActive = true
 //        imageView.anchorToEdge(.right, padding: 0, width: 30, height: 30)
         textLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 8).isActive = true
-        
+//        textLabel.leftAnchor.constraint(equalTo: stackView.leftAnchor, constant: 8).isActive = true
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         self.view.addSubview(stackView)
@@ -563,8 +577,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
 //        stackView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
 //        stackView.anchorToEdge(.right, padding: 0, width: headerView.width, height: headerView.height)
         stackView.widthAnchor.constraint(equalToConstant: tableView.bounds.size.width).isActive = true
-        
-        
+//        stackView.leftAnchor.constraint(equalTo: tableView.leftAnchor, constant: 0).isActive = true
+//        stackView.rightAnchor.constraint(equalTo: tableView.rightAnchor, constant: 0).isActive = true
         
        headerView.addSubview(stackView)// sectionLabel)
         return headerView

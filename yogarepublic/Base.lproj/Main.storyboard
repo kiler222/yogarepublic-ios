@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vdP-oi-BAE">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -17,27 +17,27 @@
             <objects>
                 <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="Yoga_Republic" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yrbackground" translatesAutoresizingMaskIntoConstraints="NO" id="0Yj-Ay-LQS" userLabel="Background">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yrlogo" translatesAutoresizingMaskIntoConstraints="NO" id="DaI-UW-Baq">
-                                <rect key="frame" x="107" y="68" width="200" height="100"/>
+                                <rect key="frame" x="87.5" y="24" width="200" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="87e-NL-4hb"/>
                                     <constraint firstAttribute="height" constant="100" id="di4-Pk-eCG"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2TP-Gx-zev" userLabel="User Name">
-                                <rect key="frame" x="0.0" y="192" width="414" height="0.0"/>
+                                <rect key="frame" x="0.0" y="148" width="375" height="0.0"/>
                                 <fontDescription key="fontDescription" name="Variable-Bold" family="Variable" pointSize="23"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NFl-gO-P6G" userLabel="Login">
-                                <rect key="frame" x="183.5" y="327" width="47" height="37"/>
+                                <rect key="frame" x="164" y="283" width="47" height="37"/>
                                 <fontDescription key="fontDescription" name="Variable-Bold" family="Variable" pointSize="20"/>
                                 <state key="normal" title="Login">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -47,21 +47,21 @@
                                 </connections>
                             </button>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IDL-X7-5N6" userLabel="barcode">
-                                <rect key="frame" x="87" y="216" width="240" height="100"/>
+                                <rect key="frame" x="57.5" y="172" width="260" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="651-oY-bJd"/>
-                                    <constraint firstAttribute="width" constant="240" id="j6r-Up-iCl"/>
+                                    <constraint firstAttribute="width" constant="260" id="j6r-Up-iCl"/>
                                 </constraints>
                             </imageView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Po-q0-qW4" userLabel="Card Number">
-                                <rect key="frame" x="87" y="316" width="240" height="21"/>
+                                <rect key="frame" x="57.5" y="272" width="260" height="21"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="Variable-Bold" family="Variable" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="a7T-7d-Qqw">
-                                <rect key="frame" x="117" y="266" width="180" height="34"/>
+                                <rect key="frame" x="97.5" y="222" width="180" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="180" id="ZqC-wX-MU2"/>
                                 </constraints>
@@ -72,7 +72,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your email address" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ltB-B2-xqQ" userLabel="Email">
-                                <rect key="frame" x="117" y="224" width="180" height="34"/>
+                                <rect key="frame" x="97.5" y="180" width="180" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="180" id="hd3-cD-W6U"/>
                                 </constraints>
@@ -83,7 +83,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AuM-ge-VBB" userLabel="Forget password">
-                                <rect key="frame" x="163" y="300" width="88" height="27"/>
+                                <rect key="frame" x="143.5" y="256" width="88" height="27"/>
                                 <fontDescription key="fontDescription" name="Variable-Bold" family="Variable" pointSize="12"/>
                                 <state key="normal" title="Forget password">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -93,11 +93,11 @@
                                 </connections>
                             </button>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="rTl-tC-hJv">
-                                <rect key="frame" x="188.5" y="397" width="37" height="37"/>
+                                <rect key="frame" x="169" y="353" width="37" height="37"/>
                                 <color key="color" red="0.79607843140000001" green="0.26274509800000001" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ce-k7-7bX" userLabel="Logout">
-                                <rect key="frame" x="185.5" y="343" width="43" height="30"/>
+                                <rect key="frame" x="166" y="299" width="43" height="30"/>
                                 <fontDescription key="fontDescription" name="Variable-Bold" family="Variable" pointSize="14"/>
                                 <state key="normal" title="Logout">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -107,58 +107,58 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="it's a natural high" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NK9-5H-Urp" userLabel="its a natural high">
-                                <rect key="frame" x="134" y="763.5" width="146" height="24.5"/>
+                                <rect key="frame" x="114.5" y="568.5" width="146" height="24.5"/>
                                 <fontDescription key="fontDescription" name="Variable-Bold" family="Variable" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ai8-Zm-lbt">
-                                <rect key="frame" x="87" y="389" width="240" height="130"/>
+                                <rect key="frame" x="57.5" y="345" width="260" height="130"/>
                                 <color key="backgroundColor" red="0.61960784313725492" green="0.62745098039215685" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="240" id="RHr-jd-1eK"/>
+                                    <constraint firstAttribute="width" constant="260" id="RHr-jd-1eK"/>
                                     <constraint firstAttribute="height" constant="130" id="zlG-5s-bJf"/>
                                 </constraints>
                                 <color key="sectionIndexColor" red="0.79607843140000001" green="0.26274509800000001" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="rCl-JA-JzS">
-                                    <rect key="frame" x="0.0" y="100" width="240" height="0.0"/>
+                                    <rect key="frame" x="0.0" y="100" width="260" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MembershipTableViewCell" id="GCR-8g-zEm" customClass="MembershipTableViewCell" customModule="Yoga_Republic" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="240" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="260" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GCR-8g-zEm" id="t3u-wU-HMd">
-                                            <rect key="frame" x="0.0" y="0.0" width="240" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="260" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HqV-qa-m94">
-                                                    <rect key="frame" x="8" y="0.0" width="232" height="44"/>
+                                                    <rect key="frame" x="8" y="0.0" width="252" height="44"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Membership name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ful-vb-KyN" userLabel="Membership">
-                                                            <rect key="frame" x="0.0" y="0.0" width="138" height="44"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="148" height="44"/>
                                                             <fontDescription key="fontDescription" name="Variable-Bold" family="Variable" pointSize="11"/>
                                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A4U-kh-Jpe" userLabel="space">
-                                                            <rect key="frame" x="138" y="0.0" width="4" height="44"/>
+                                                            <rect key="frame" x="148" y="0.0" width="4" height="44"/>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="4" id="emm-Z0-OM2"/>
                                                             </constraints>
                                                         </view>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cWw-b3-Err" userLabel="Date">
-                                                            <rect key="frame" x="142" y="0.0" width="60" height="44"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="date" textAlignment="right" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cWw-b3-Err" userLabel="Date">
+                                                            <rect key="frame" x="152" y="0.0" width="70" height="44"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="60" id="y1x-QO-D4Q"/>
+                                                                <constraint firstAttribute="width" constant="70" id="y1x-QO-D4Q"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="Variable-Bold" family="Variable" pointSize="11"/>
                                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="l9i-Pt-eYL">
-                                                            <rect key="frame" x="202" y="2.5" width="30" height="39.5"/>
+                                                            <rect key="frame" x="222" y="2.5" width="30" height="39.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="30" id="YSV-rG-DBC"/>
                                                             </constraints>
@@ -248,14 +248,14 @@
             <objects>
                 <viewController id="1f4-tn-h6L" customClass="TimeViewController" customModule="Yoga_Republic" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aE7-sg-Dbn">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yrbackground" translatesAutoresizingMaskIntoConstraints="NO" id="lcX-dj-8rH" userLabel="Background">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <button hidden="YES" opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Dl-W3-Kmv">
-                                <rect key="frame" x="57.5" y="108" width="300" height="200"/>
+                                <rect key="frame" x="38" y="64" width="300" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="6Iw-NW-RyG"/>
                                     <constraint firstAttribute="width" constant="300" id="D6A-vT-yDH"/>
@@ -269,7 +269,7 @@
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Npk-Jl-wa4">
-                                <rect key="frame" x="57" y="372" width="300" height="200"/>
+                                <rect key="frame" x="37.5" y="328" width="300" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="Irl-wf-60M"/>
                                     <constraint firstAttribute="width" constant="300" id="u0d-MR-QCw"/>
@@ -283,7 +283,7 @@
                                 </connections>
                             </button>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="6En-J5-GVv">
-                                <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
                                 <color key="color" red="0.79607843140000001" green="0.26274509800000001" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                         </subviews>
